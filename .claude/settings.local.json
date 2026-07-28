@@ -4,7 +4,17 @@
       "Bash(grep -E \"\\\\.md$\")",
       "Bash(mkdir -p /workspace/aurora-platform)",
       "Read(//workspace/**)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git branch *)",
+      "Bash(git push *)",
+      "Bash(gh --version)",
+      "Bash(curl -s \"https://api.github.com/repos/njohnjugunah/aurora-platform/actions/runs\")",
+      "Bash(curl -s \"https://api.github.com/repos/njohnjugunah/aurora-platform/actions/runs/30366531143/jobs\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s \"https://api.github.com/repos/njohnjugunah/aurora-platform/actions/runs/30366531143/logs\" -L)",
+      "Bash(ls -lh /tmp/workflow_logs.zip 2>&1 || echo \"Failed to download logs\")",
+      "Bash(composer install *)"
     ]
   }
 }

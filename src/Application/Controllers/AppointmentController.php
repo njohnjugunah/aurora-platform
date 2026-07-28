@@ -18,11 +18,14 @@ class AppointmentController
     public function __construct(
         private AppointmentRepository $appointmentRepository,
         private BookingService $bookingService,
-        private AvailabilityService $availabilityService,
         private AppointmentValidator $validator,
         private LoggerInterface $logger
     ) {}
 
+    /**
+     * @param array<string, mixed> $query
+     * @return array<string, mixed>
+     */
     public function list(array $query): array
     {
         try {
@@ -37,16 +40,10 @@ class AppointmentController
                 'status' => $query['status'] ?? null,
             ];
 
-            $sort = $query['sort'] ?? 'id';
-            $order = strtolower($query['order'] ?? 'asc');
-            $order = in_array($order, ['asc', 'desc']) ? $order : 'asc';
-
-            $result = $this->appointmentRepository->findFiltered(
-                $filters,
-                $sort,
-                $order,
+            $result = $this->appointmentRepository->findPaginated(
                 $page,
-                $limit
+                $limit,
+                $filters
             );
 
             $this->logger->info('Appointments listed', [
@@ -84,6 +81,9 @@ class AppointmentController
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function get(int $id): array
     {
         try {
@@ -127,6 +127,10 @@ class AppointmentController
         }
     }
 
+    /**
+     * @param array<string, mixed> $request
+     * @return array<string, mixed>
+     */
     public function create(array $request): array
     {
         try {
@@ -204,6 +208,10 @@ class AppointmentController
         }
     }
 
+    /**
+     * @param array<string, mixed> $request
+     * @return array<string, mixed>
+     */
     public function update(int $id, array $request): array
     {
         try {
@@ -294,6 +302,10 @@ class AppointmentController
         }
     }
 
+    /**
+     * @param array<string, mixed> $request
+     * @return array<string, mixed>
+     */
     public function cancel(int $id, array $request): array
     {
         try {

@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": "^8.3",
+    "psr/log": "^3.0",
     "ext-pdo": "*",
     "ext-json": "*",
     "ext-bcmath": "*",

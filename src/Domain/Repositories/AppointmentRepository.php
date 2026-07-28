@@ -31,4 +31,8 @@ interface AppointmentRepository
         int $perPage = 20,
         array $filters = []
     ): array;
+
+    public function update(array $data): mixed;
+
+    public function updateStatus(int $id, string $status, string $reason = ''): mixed;
 }
