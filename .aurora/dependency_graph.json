@@ -1,0 +1,93 @@
+{
+  "metadata": {
+    "generated": "2026-07-28T10:30:00Z",
+    "framework": "Aurora AI-SDLC",
+    "purpose": "Track component dependencies for sprint planning"
+  },
+  "dependencies": {
+    "domain_models": {
+      "status": "complete",
+      "blocks": ["services", "repositories", "controllers"]
+    },
+    "database_schema": {
+      "status": "complete",
+      "blocks": ["repository_implementations", "migrations"]
+    },
+    "repository_interfaces": {
+      "status": "complete",
+      "blocks": ["repository_implementations"],
+      "required_by": ["services", "controllers"]
+    },
+    "repository_implementations_mysql": {
+      "status": "pending",
+      "blocks": ["all_controllers", "integration_tests"],
+      "critical_path": true,
+      "estimated_effort_hours": 27,
+      "deadline": "2026-07-30"
+    },
+    "services": {
+      "status": "in_progress",
+      "completion": "65%",
+      "blocks": ["controllers", "api_testing"],
+      "requires": ["domain_models", "repository_interfaces"]
+    },
+    "controllers": {
+      "status": "pending",
+      "blocks": ["frontend_integration", "api_testing"],
+      "requires": ["services", "validators", "repositories"],
+      "critical_path": true,
+      "estimated_effort_hours": 26
+    },
+    "validators": {
+      "status": "pending",
+      "blocks": ["controllers"],
+      "estimated_effort_hours": 8
+    },
+    "frontend_modules": {
+      "status": "pending",
+      "blocks": ["e2e_tests", "go_live"],
+      "requires": ["controllers", "api_client"]
+    },
+    "api_client": {
+      "status": "pending",
+      "blocks": ["frontend_modules"],
+      "estimated_effort_hours": 8
+    },
+    "testing": {
+      "unit_tests": {
+        "status": "pending",
+        "requires": ["services", "models", "validators"]
+      },
+      "integration_tests": {
+        "status": "pending",
+        "requires": ["controllers", "repository_implementations_mysql"]
+      },
+      "e2e_tests": {
+        "status": "pending",
+        "requires": ["frontend_modules", "full_backend"]
+      }
+    },
+    "m_pesa_integration": {
+      "status": "pending",
+      "blocks": ["payment_testing", "go_live"],
+      "critical_path": true,
+      "estimated_effort_hours": 8
+    }
+  },
+  "critical_path": [
+    "Domain Models (complete) → ",
+    "Repository Interfaces (complete) → ",
+    "MySQL Implementations (BLOCKING) → ",
+    "Services Completion (in progress) → ",
+    "Controllers (BLOCKING) → ",
+    "API Testing → ",
+    "Frontend Integration → ",
+    "E2E Testing → ",
+    "Production Deployment"
+  ],
+  "parallelizable_work": [
+    "Frontend module development (can start week 2)",
+    "Testing (can start on existing code)",
+    "Documentation updates (can happen in parallel)"
+  ]
+}

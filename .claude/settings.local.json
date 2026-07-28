@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.md$\")",
+      "Bash(mkdir -p /workspace/aurora-platform)",
+      "Read(//workspace/**)",
+      "Bash(git add *)"
+    ]
+  }
+}

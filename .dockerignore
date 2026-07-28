@@ -1,0 +1,15 @@
+.git
+.gitignore
+.gitattributes
+.github
+.env
+.env.local
+.env.*.local
+coverage
+build
+vendor
+node_modules
+*.log
+.phpunit.result.cache
+.DS_Store
+Thumbs.db
