@@ -57,6 +57,8 @@ class BookingServiceTest extends TestCase
         $this->expectException(InvalidBookingException::class);
         $this->expectExceptionMessage('Cannot book appointments in the past');
 
+        $this->customerRepo->method('exists')->willReturn(true);
+
         $pastDate = new DateTime('2026-01-01');
         $this->bookingService->bookAppointment(
             10,
