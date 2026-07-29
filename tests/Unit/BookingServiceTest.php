@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Application\Services;
 
+use DateTime;
 use PHPUnit\Framework\TestCase;
 use App\Application\Services\BookingService;
 use App\Application\Services\AvailabilityService;

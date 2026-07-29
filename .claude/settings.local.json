@@ -51,7 +51,8 @@
       "Bash(git commit -m 'chore: add phpunit configuration for test discovery *)",
       "Bash(git commit -m 'fix: correct controller constructor parameters in unit tests *)",
       "Bash(git commit -m 'fix: correct remaining controller constructor parameters in tests *)",
-      "Bash(git commit -m 'fix: correct phpunit configuration and test service dependencies *)"
+      "Bash(git commit -m 'fix: correct phpunit configuration and test service dependencies *)",
+      "Bash(git commit -m 'fix: correct strict type violations and namespace issues *)"
     ]
   }
 }
