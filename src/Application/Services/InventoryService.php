@@ -16,8 +16,11 @@ class InventoryService
 
     public function getStockLevel(int $productId): int
     {
-        $stock = $this->stockRepo->findByProductId($productId) ?? $this->stockRepo->findById($productId);
-        if (!$stock) {
+        $stock = $this->stockRepo->findByProductId($productId);
+        if ($stock === null) {
+            $stock = $this->stockRepo->findById($productId);
+        }
+        if ($stock === null) {
             return 0;
         }
         return (int) ($stock['quantity_on_hand'] ?? $stock['quantity_available'] ?? 0);
@@ -25,8 +28,11 @@ class InventoryService
 
     public function adjustStock(int $productId, int $quantity, string $type): bool
     {
-        $current = $this->stockRepo->findByProductId($productId) ?? $this->stockRepo->findById($productId);
-        if (!$current) {
+        $current = $this->stockRepo->findByProductId($productId);
+        if ($current === null) {
+            $current = $this->stockRepo->findById($productId);
+        }
+        if ($current === null) {
             return false;
         }
 
@@ -45,8 +51,11 @@ class InventoryService
 
     public function checkStockAvailability(int $productId, int $quantity): bool
     {
-        $stock = $this->stockRepo->findByProductId($productId) ?? $this->stockRepo->findById($productId);
-        if (!$stock) {
+        $stock = $this->stockRepo->findByProductId($productId);
+        if ($stock === null) {
+            $stock = $this->stockRepo->findById($productId);
+        }
+        if ($stock === null) {
             return false;
         }
         return (($stock['quantity_on_hand'] ?? 0) >= $quantity);
@@ -54,8 +63,11 @@ class InventoryService
 
     public function reserveStock(int $productId, int $quantity): bool
     {
-        $stock = $this->stockRepo->findByProductId($productId) ?? $this->stockRepo->findById($productId);
-        if (!$stock) {
+        $stock = $this->stockRepo->findByProductId($productId);
+        if ($stock === null) {
+            $stock = $this->stockRepo->findById($productId);
+        }
+        if ($stock === null) {
             return false;
         }
         $reserved = (int) ($stock['quantity_reserved'] ?? 0) + $quantity;
