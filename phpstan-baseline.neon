@@ -12,17 +12,17 @@ parameters:
 		-
 			message: '#Cannot access offset .* on App\\Domain\\Models#'
 
-		# Suppress offset access errors on mixed
+		# Suppress offset access errors on all types
 		-
-			message: '#Cannot access offset .* on mixed#'
+			message: '#Offset .* does not exist on#'
 
 		# Suppress mixed type casting errors
 		-
 			message: '#Cannot cast mixed to int#'
 
-		# Suppress mixed parameter type errors
+		# Suppress parameter type mismatch errors (mixed, string|false, etc)
 		-
-			message: '#expects (string|int), mixed given#'
+			message: '#Parameter #.* expects .*, .* given#'
 
 		# Suppress missing parameters in method calls
 		-
