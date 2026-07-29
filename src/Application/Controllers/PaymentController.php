@@ -63,7 +63,7 @@ class PaymentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to list payments', [
                 'error' => $e->getMessage()
             ]);
@@ -103,7 +103,7 @@ class PaymentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to retrieve payment', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -156,7 +156,7 @@ class PaymentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to verify payment', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -220,7 +220,7 @@ class PaymentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to refund payment', [
                 'id' => $id,
                 'error' => $e->getMessage()

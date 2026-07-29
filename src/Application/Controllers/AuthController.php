@@ -38,7 +38,7 @@ class AuthController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (ValidationException $e) {
+} catch (ValidationException $e) {
             return [
                 'success' => false,
                 'error' => [
@@ -92,7 +92,7 @@ class AuthController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             return [
                 'success' => false,
                 'error' => [

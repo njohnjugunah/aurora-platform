@@ -57,7 +57,7 @@ class UserController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to list users', [
                 'error' => $e->getMessage()
             ]);
@@ -97,7 +97,7 @@ class UserController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to retrieve user', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -184,7 +184,7 @@ class UserController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to create user', [
                 'error' => $e->getMessage()
             ]);
@@ -274,7 +274,7 @@ class UserController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to update user', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -317,7 +317,7 @@ class UserController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to delete user', [
                 'id' => $id,
                 'error' => $e->getMessage()

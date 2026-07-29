@@ -45,7 +45,7 @@ class MpesaGateway
                 'checkout_request_id' => 'ws_CO_' . time()
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('STK push failed', [
                 'error' => $e->getMessage()
             ]);
@@ -68,7 +68,7 @@ class MpesaGateway
                 'CheckoutRequestID' => $checkoutRequestId
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Transaction query failed', [
                 'error' => $e->getMessage()
             ]);
@@ -93,7 +93,7 @@ class MpesaGateway
                 'refund_id' => 'REF_' . time()
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Refund failed', [
                 'error' => $e->getMessage()
             ]);

@@ -61,7 +61,7 @@ class CustomerController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to list customers', [
                 'error' => $e->getMessage()
             ]);
@@ -103,7 +103,7 @@ class CustomerController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to retrieve customer', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -146,7 +146,7 @@ class CustomerController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (ValidationException $e) {
+} catch (ValidationException $e) {
             return [
                 'success' => false,
                 'error' => [
@@ -157,7 +157,7 @@ class CustomerController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to create customer', [
                 'error' => $e->getMessage()
             ]);
@@ -210,7 +210,7 @@ class CustomerController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (ValidationException $e) {
+} catch (ValidationException $e) {
             return [
                 'success' => false,
                 'error' => [
@@ -221,7 +221,7 @@ class CustomerController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to update customer', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -264,7 +264,7 @@ class CustomerController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to delete customer', [
                 'id' => $id,
                 'error' => $e->getMessage()

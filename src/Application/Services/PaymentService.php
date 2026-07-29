@@ -66,7 +66,7 @@ class PaymentService
 
             return $payment;
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('M-Pesa payment failed', [
                 'error' => $e->getMessage()
             ]);
@@ -97,7 +97,7 @@ class PaymentService
                 ]);
             }
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Payment verification failed', [
                 'error' => $e->getMessage()
             ]);

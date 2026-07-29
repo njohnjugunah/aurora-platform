@@ -57,7 +57,7 @@ class StaffController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to list staff', [
                 'error' => $e->getMessage()
             ]);
@@ -99,7 +99,7 @@ class StaffController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to retrieve staff', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -150,7 +150,7 @@ class StaffController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to retrieve staff performance', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -201,7 +201,7 @@ class StaffController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-        } catch (\Exception $e) {
+} catch (\Exception $e) {
             $this->logger->error('Failed to calculate staff commission', [
                 'id' => $id,
                 'error' => $e->getMessage()
