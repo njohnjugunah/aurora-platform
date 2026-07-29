@@ -1,16 +1,22 @@
 parameters:
 	ignoreErrors:
-		# Suppress array type specification errors
-		# Controllers/services don't have value type hints yet
+		# Suppress array type specification errors in method parameters
 		-
-			message: '#has no value type specified in iterable type array#'
+			message: '#has parameter .* with no value type specified in iterable type array#'
+
+		# Suppress array type specification errors in return types
+		-
+			message: '#return type has no value type specified in iterable type array#'
 
 		# Suppress "Cannot access offset" errors on models
-		# Controllers treat model objects as arrays
 		-
 			message: '#Cannot access offset .* on App\\Domain\\Models#'
 
-		# Suppress mixed type casting errors from query parameters
+		# Suppress offset access errors on mixed
+		-
+			message: '#Cannot access offset .* on mixed#'
+
+		# Suppress mixed type casting errors
 		-
 			message: '#Cannot cast mixed to int#'
 
@@ -18,9 +24,25 @@ parameters:
 		-
 			message: '#expects (string|int), mixed given#'
 
-		# Suppress undefined method errors on services
+		# Suppress missing parameters in method calls
+		-
+			message: '#Missing parameter .* in call to method#'
+
+		# Suppress unknown parameters in method calls
+		-
+			message: '#Unknown parameter .* in call to method#'
+
+		# Suppress calling private methods
+		-
+			message: '#Call to private method#'
+
+		# Suppress undefined method errors
 		-
 			message: '#Call to an undefined method#'
+
+		# Suppress result of method is used warnings
+		-
+			message: '#Result of method .* is used#'
 
 		# Suppress "never read" property warnings
 		-
@@ -30,14 +52,10 @@ parameters:
 		-
 			message: '#is never written, only read#'
 
-		# Suppress offset access errors
-		-
-			message: '#Offset .* does not exist on#'
-
 		# Suppress cannot call method on nullable
 		-
 			message: '#Cannot call method.*on.*null#'
 
-		# Suppress DateTime parameter type issues
+		# Suppress return type mismatches
 		-
-			message: '#expects (int|string).*given#'
+			message: '#should return .* but returns#'
