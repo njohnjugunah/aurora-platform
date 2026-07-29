@@ -78,7 +78,8 @@ class InventoryService
 
     public function getLowStockItems(int $limit = 50): array
     {
-        return $this->stockRepo->getLowStockItems($limit) ?? [];
+        $items = $this->stockRepo->getLowStockItems($limit);
+        return is_array($items) ? $items : [];
     }
 
     public function deductStock(int $productId, int $quantity): void
