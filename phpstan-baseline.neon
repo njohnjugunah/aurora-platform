@@ -4,13 +4,21 @@ parameters:
 		-
 			message: '#no value type specified in iterable type array#'
 
-		# Suppress offset access errors
+		# Suppress "Cannot access offset" errors on models
+		-
+			message: '#Cannot access offset .* on#'
+
+		# Suppress "does not exist on" offset errors
 		-
 			message: '#does not exist on#'
 
 		# Suppress type casting/parameter errors
 		-
 			message: '#Cannot cast mixed to int#'
+
+		# Suppress DateTime constructor parameter errors
+		-
+			message: '#of class DateTime#'
 
 		# Suppress function parameter type mismatches
 		-
