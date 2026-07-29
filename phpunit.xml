@@ -2,35 +2,35 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
          bootstrap="vendor/autoload.php"
-         colors="true"
+         cacheDirectory=".phpunit.cache"
+         executionOrder="depends,defects"
+         forceCoversAnnotatedCoveredMethods="false"
+         beStrictAboutCoverageMismatch="false"
+         beStrictAboutOutputDuringTests="true"
          failOnRisky="true"
          failOnWarning="true"
-         cacheResultFile=".phpunit.result.cache"
          verbose="true">
     <testsuites>
-        <testsuite name="Unit">
+        <testsuite name="Unit Tests">
             <directory>tests/Unit</directory>
         </testsuite>
-        <testsuite name="Integration">
+        <testsuite name="Integration Tests">
             <directory>tests/Integration</directory>
         </testsuite>
     </testsuites>
 
-    <coverage processUncoveredFiles="true" ignoreDeprecatedCodeUnitsFromCodeCoverage="true">
+    <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">src</directory>
         </include>
         <report>
-            <clover outputFile="coverage/clover.xml"/>
-            <html outputDirectory="coverage/html"/>
+            <html outputDirectory="coverage-report"/>
+            <text outputFile="php://stdout" showUncoveredFiles="false"/>
         </report>
     </coverage>
 
     <php>
-        <ini name="display_errors" value="On"/>
         <ini name="error_reporting" value="-1"/>
-        <ini name="memory_limit" value="-1"/>
-        <env name="APP_ENV" value="testing"/>
-        <env name="APP_DEBUG" value="true"/>
+        <ini name="display_errors" value="On"/>
     </php>
 </phpunit>
