@@ -6,6 +6,7 @@ namespace Tests\Unit\Controllers;
 
 use PHPUnit\Framework\TestCase;
 use App\Application\Controllers\LoyaltyController;
+use App\Application\Services\LoyaltyService;
 use App\Domain\Repositories\LoyaltyRepository;
 use Psr\Log\LoggerInterface;
 
@@ -13,13 +14,15 @@ class LoyaltyControllerTest extends TestCase
 {
     private LoyaltyController $controller;
     private $repository;
+    private $service;
     private $logger;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(LoyaltyRepository::class);
+        $this->service = $this->createMock(LoyaltyService::class);
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->controller = new LoyaltyController($this->repository, $this->logger);
+        $this->controller = new LoyaltyController($this->repository, $this->service, $this->logger);
     }
 
     public function testGetCustomerPoints(): void

@@ -6,8 +6,11 @@ namespace Tests\Unit\Services;
 
 use PHPUnit\Framework\TestCase;
 use App\Application\Services\PaymentService;
+use App\Application\Services\InventoryService;
+use App\Application\Services\LoyaltyService;
 use App\Domain\Repositories\PaymentRepository;
 use App\Domain\Repositories\SaleRepository;
+use App\Infrastructure\Integrations\MpesaGateway;
 use Psr\Log\LoggerInterface;
 
 class PaymentServiceTest extends TestCase
@@ -15,18 +18,26 @@ class PaymentServiceTest extends TestCase
     private PaymentService $service;
     private $paymentRepository;
     private $saleRepository;
+    private $mpesaGateway;
+    private $inventoryService;
+    private $loyaltyService;
     private $logger;
 
     protected function setUp(): void
     {
         $this->paymentRepository = $this->createMock(PaymentRepository::class);
         $this->saleRepository = $this->createMock(SaleRepository::class);
+        $this->mpesaGateway = $this->createMock(MpesaGateway::class);
+        $this->inventoryService = $this->createMock(InventoryService::class);
+        $this->loyaltyService = $this->createMock(LoyaltyService::class);
         $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->service = new PaymentService(
             $this->paymentRepository,
             $this->saleRepository,
-            $this->logger
+            $this->mpesaGateway,
+            $this->inventoryService,
+            $this->loyaltyService
         );
     }
 

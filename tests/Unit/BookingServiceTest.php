@@ -4,9 +4,14 @@ namespace Tests\Unit\Application\Services;
 
 use PHPUnit\Framework\TestCase;
 use App\Application\Services\BookingService;
+use App\Application\Services\AvailabilityService;
+use App\Application\Services\NotificationService;
 use App\Domain\Repositories\AppointmentRepository;
 use App\Domain\Repositories\CustomerRepository;
+use App\Domain\Repositories\ServiceRepository;
+use App\Domain\Repositories\StaffRepository;
 use App\Application\Exceptions\InvalidBookingException;
+use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
 class BookingServiceTest extends TestCase
