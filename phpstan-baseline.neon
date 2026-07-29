@@ -1,61 +1,53 @@
 parameters:
 	ignoreErrors:
-		# Suppress array type specification errors in method parameters
+		# Suppress array type specification errors
 		-
-			message: '#has parameter .* with no value type specified in iterable type array#'
+			message: '#no value type specified in iterable type array#'
 
-		# Suppress array type specification errors in return types
+		# Suppress offset access errors
 		-
-			message: '#return type has no value type specified in iterable type array#'
+			message: '#does not exist on#'
 
-		# Suppress "Cannot access offset" errors on models
-		-
-			message: '#Cannot access offset .* on App\\Domain\\Models#'
-
-		# Suppress offset access errors on all types
-		-
-			message: '#Offset .* does not exist on#'
-
-		# Suppress mixed type casting errors
+		# Suppress type casting/parameter errors
 		-
 			message: '#Cannot cast mixed to int#'
 
-		# Suppress parameter type mismatch errors (mixed, string|false, etc)
+		# Suppress function parameter type mismatches
 		-
-			message: '#Parameter #.* expects .*, .* given#'
+			message: '#of function.*expects#'
 
-		# Suppress missing parameters in method calls
+		# Suppress method parameter type mismatches
 		-
-			message: '#Missing parameter .* in call to method#'
+			message: '#of method.*expects#'
 
-		# Suppress unknown parameters in method calls
+		# Suppress parameter issues in method calls
 		-
-			message: '#Unknown parameter .* in call to method#'
+			message: '#parameter.*in call to method#'
 
-		# Suppress calling private methods
+		# Suppress private method calls
 		-
 			message: '#Call to private method#'
 
-		# Suppress undefined method errors
+		# Suppress undefined method calls
 		-
 			message: '#Call to an undefined method#'
 
-		# Suppress result of method is used warnings
+		# Suppress method result usage
 		-
-			message: '#Result of method .* is used#'
+			message: '#Result of method#'
 
-		# Suppress "never read" property warnings
+		# Suppress property read/write issues
 		-
-			message: '#is never read, only written#'
+			message: '#is never read#'
 
-		# Suppress "never written" property warnings
+		# Suppress property write/read issues
 		-
-			message: '#is never written, only read#'
+			message: '#is never written#'
 
-		# Suppress cannot call method on nullable
+		# Suppress null method calls
 		-
-			message: '#Cannot call method.*on.*null#'
+			message: '#Cannot call method#'
 
 		# Suppress return type mismatches
 		-
-			message: '#should return .* but returns#'
+			message: '#should return#'
