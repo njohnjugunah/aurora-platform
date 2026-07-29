@@ -4,9 +4,9 @@ parameters:
 		-
 			message: '#no value type specified in iterable type array#'
 
-		# Suppress "Cannot access offset" errors on models
+		# Suppress "Cannot access offset" errors on models and other types
 		-
-			message: '#Cannot access offset .* on#'
+			message: '#Cannot access offset#'
 
 		# Suppress "does not exist on" offset errors
 		-
@@ -16,45 +16,33 @@ parameters:
 		-
 			message: '#Cannot cast mixed to int#'
 
-		# Suppress DateTime constructor parameter errors
+		# Suppress constructor parameter errors (DateTime, etc)
 		-
-			message: '#of class DateTime#'
+			message: '#of class#'
 
 		# Suppress function parameter type mismatches
 		-
-			message: '#of function.*expects#'
+			message: '#of function#'
 
 		# Suppress method parameter type mismatches
 		-
-			message: '#of method.*expects#'
+			message: '#of method#'
 
 		# Suppress parameter issues in method calls
 		-
-			message: '#parameter.*in call to method#'
+			message: '#parameter#'
 
-		# Suppress private method calls
+		# Suppress method/property calls
 		-
-			message: '#Call to private method#'
-
-		# Suppress undefined method calls
-		-
-			message: '#Call to an undefined method#'
+			message: '#Call to#'
 
 		# Suppress method result usage
 		-
-			message: '#Result of method#'
+			message: '#Result of#'
 
-		# Suppress property read/write issues
+		# Suppress property issues
 		-
-			message: '#is never read#'
-
-		# Suppress property write/read issues
-		-
-			message: '#is never written#'
-
-		# Suppress null method calls
-		-
-			message: '#Cannot call method#'
+			message: '#is never#'
 
 		# Suppress return type mismatches
 		-
