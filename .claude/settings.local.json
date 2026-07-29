@@ -14,7 +14,15 @@
       "Read(//tmp/**)",
       "Bash(curl -s \"https://api.github.com/repos/njohnjugunah/aurora-platform/actions/runs/30366531143/logs\" -L)",
       "Bash(ls -lh /tmp/workflow_logs.zip 2>&1 || echo \"Failed to download logs\")",
-      "Bash(composer install *)"
+      "Bash(composer install *)",
+      "Bash(curl -s \"https://api.github.com/repos/njohnjugunah/aurora-platform/actions/runs?per_page=2\")",
+      "Bash(cat)",
+      "Bash(chmod +x /tmp/monitor_build.sh)",
+      "Bash(/tmp/monitor_build.sh)",
+      "Bash(chmod +x /tmp/monitor_build_simple.sh)",
+      "Bash(/tmp/monitor_build_simple.sh)",
+      "Bash(chmod +x /tmp/check_workflow.sh)",
+      "Bash(/tmp/check_workflow.sh)"
     ]
   }
 }

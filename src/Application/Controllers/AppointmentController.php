@@ -29,8 +29,8 @@ class AppointmentController
     public function list(array $query): array
     {
         try {
-            $page = (int) ($query['page'] ?? 1);
-            $limit = (int) ($query['limit'] ?? 50);
+            $page = isset($query['page']) ? (int) $query['page'] : 1;
+            $limit = isset($query['limit']) ? (int) $query['limit'] : 50;
             $limit = min($limit, 100);
 
             $filters = [
@@ -81,6 +81,9 @@ class AppointmentController
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     /**
      * @return array<string, mixed>
      */
@@ -136,23 +139,24 @@ class AppointmentController
         try {
             $this->validator->validate($request);
 
-            $appointment = $this->bookingService->scheduleAppointment(
-                customer_id: $request['customerId'],
-                service_id: $request['serviceId'],
-                staff_id: $request['staffId'],
-                start_time: $request['startTime'],
-                notes: $request['notes'] ?? null
+            $appointment = $this->bookingService->bookAppointment(
+                customerId: (int) $request['customerId'],
+                serviceId: (int) $request['serviceId'],
+                staffId: (int) $request['staffId'],
+                scheduledDate: new \DateTime($request['startTime']),
+                scheduledTime: new \DateTime($request['startTime']),
+                customerNotes: $request['notes'] ?? ''
             );
 
             $this->logger->info('Appointment created', [
-                'appointment_id' => $appointment['id'],
+                'appointment_id' => $appointment->getId(),
                 'customer_id' => $request['customerId'],
                 'staff_id' => $request['staffId']
             ]);
 
             return [
                 'success' => true,
-                'data' => $appointment,
+                'data' => $appointment->toArray(),
                 'meta' => ['timestamp' => date('c')]
             ];
 
@@ -228,7 +232,10 @@ class AppointmentController
                 ];
             }
 
-            if (in_array($appointment['status'], ['completed', 'cancelled'])) {
+            // Handle both array and object returns from repository
+            $status = is_array($appointment) ? $appointment['status'] : $appointment->getStatus();
+
+            if (in_array($status, ['completed', 'cancelled'])) {
                 return [
                     'success' => false,
                     'error' => [
@@ -239,23 +246,25 @@ class AppointmentController
                 ];
             }
 
+            $appointmentArray = is_array($appointment) ? $appointment : $appointment->toArray();
+
             $updated = [
-                'service_id' => $request['serviceId'] ?? $appointment['serviceId'],
-                'staff_id' => $request['staffId'] ?? $appointment['staffId'],
-                'start_time' => $request['startTime'] ?? $appointment['startTime'],
-                'notes' => $request['notes'] ?? $appointment['notes'],
+                'service_id' => $request['serviceId'] ?? $appointmentArray['service_id'],
+                'staff_id' => $request['staffId'] ?? $appointmentArray['staff_id'],
+                'start_time' => $request['startTime'] ?? $appointmentArray['scheduled_time'],
+                'notes' => $request['notes'] ?? $appointmentArray['customer_notes'],
             ];
 
             $this->validator->validateUpdate($updated);
 
             $updated['id'] = $id;
-            $updated['customerId'] = $appointment['customerId'];
+            $updated['customer_id'] = is_array($appointment) ? $appointment['customer_id'] : $appointment->getCustomerId();
 
             $result = $this->appointmentRepository->update($updated);
 
             $this->logger->info('Appointment updated', [
                 'id' => $id,
-                'customer_id' => $appointment['customerId']
+                'customer_id' => $updated['customer_id']
             ]);
 
             return [
@@ -322,7 +331,10 @@ class AppointmentController
                 ];
             }
 
-            if (in_array($appointment['status'], ['completed', 'cancelled'])) {
+            // Handle both array and object returns from repository
+            $status = is_array($appointment) ? $appointment['status'] : $appointment->getStatus();
+
+            if (in_array($status, ['completed', 'cancelled'])) {
                 return [
                     'success' => false,
                     'error' => [
