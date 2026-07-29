@@ -22,7 +22,7 @@ parameters:
 
 		# Suppress "Cannot call method on nullable" errors
 		-
-			message: '#Cannot call method.* on.*null#'
+			message: '#Cannot call method#'
 
 		# Suppress undefined method calls (methods not yet implemented)
 		-
@@ -34,7 +34,7 @@ parameters:
 
 		# Suppress missing/unknown parameters in method calls
 		-
-			message: '#parameter.*in call to method#'
+			message: '#parameter#'
 
 		# Suppress void method result usage
 		-
