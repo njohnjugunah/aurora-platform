@@ -149,7 +149,7 @@ class AppointmentController
             );
 
             $this->logger->info('Appointment created', [
-                'appointment_id' => $appointment->getId(),
+                'appointment_id' => $appointment->getId() ?? null,
                 'customer_id' => $request['customerId'],
                 'staff_id' => $request['staffId']
             ]);
@@ -232,8 +232,7 @@ class AppointmentController
                 ];
             }
 
-            // Handle both array and object returns from repository
-            $status = is_array($appointment) ? $appointment['status'] : $appointment->getStatus();
+            $status = $appointment['status'] ?? null;
 
             if (in_array($status, ['completed', 'cancelled'])) {
                 return [
@@ -246,25 +245,23 @@ class AppointmentController
                 ];
             }
 
-            $appointmentArray = is_array($appointment) ? $appointment : $appointment->toArray();
-
             $updated = [
-                'service_id' => $request['serviceId'] ?? $appointmentArray['service_id'],
-                'staff_id' => $request['staffId'] ?? $appointmentArray['staff_id'],
-                'start_time' => $request['startTime'] ?? $appointmentArray['scheduled_time'],
-                'notes' => $request['notes'] ?? $appointmentArray['customer_notes'],
+                'service_id' => $request['serviceId'] ?? $appointment['service_id'],
+                'staff_id' => $request['staffId'] ?? $appointment['staff_id'],
+                'start_time' => $request['startTime'] ?? $appointment['start_time'],
+                'notes' => $request['notes'] ?? $appointment['customer_notes'],
             ];
 
             $this->validator->validateUpdate($updated);
 
             $updated['id'] = $id;
-            $updated['customer_id'] = is_array($appointment) ? $appointment['customer_id'] : $appointment->getCustomerId();
+            $updated['customer_id'] = $appointment['customer_id'];
 
             $result = $this->appointmentRepository->update($updated);
 
             $this->logger->info('Appointment updated', [
                 'id' => $id,
-                'customer_id' => $updated['customer_id']
+                'customer_id' => $appointment['customer_id']
             ]);
 
             return [
@@ -331,8 +328,7 @@ class AppointmentController
                 ];
             }
 
-            // Handle both array and object returns from repository
-            $status = is_array($appointment) ? $appointment['status'] : $appointment->getStatus();
+            $status = $appointment['status'] ?? null;
 
             if (in_array($status, ['completed', 'cancelled'])) {
                 return [
