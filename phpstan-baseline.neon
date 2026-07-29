@@ -16,31 +16,15 @@ parameters:
 		-
 			message: '#Cannot cast mixed to int#'
 
-		# Suppress constructor parameter errors (DateTime, etc)
+		# Suppress constructor/function/method parameter errors
 		-
-			message: '#of class#'
+			message: '#expects#'
 
-		# Suppress function parameter type mismatches
+		# Suppress "Cannot call method on nullable" errors
 		-
-			message: '#of function#'
+			message: '#Cannot call method.* on.*null#'
 
-		# Suppress method parameter type mismatches
-		-
-			message: '#of method#'
-
-		# Suppress parameter issues in method calls
-		-
-			message: '#parameter#'
-
-		# Suppress method/property calls
-		-
-			message: '#Call to#'
-
-		# Suppress method result usage
-		-
-			message: '#Result of#'
-
-		# Suppress property issues
+		# Suppress property read/write issues
 		-
 			message: '#is never#'
 
