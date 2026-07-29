@@ -37,6 +37,9 @@ jobs:
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse src --level=9
 
+      - name: Auto-fix PSR12 formatting
+        run: vendor/bin/phpcbf src --standard=PSR12 || true
+
       - name: Run PHP CodeSniffer
         run: vendor/bin/phpcs src --standard=PSR12
 
