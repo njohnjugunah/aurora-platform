@@ -19,7 +19,6 @@ class AppointmentControllerTest extends TestCase
     private AppointmentController $controller;
     private $appointmentRepository;
     private $bookingService;
-    private $availabilityService;
     private $validator;
     private $logger;
 
@@ -27,14 +26,12 @@ class AppointmentControllerTest extends TestCase
     {
         $this->appointmentRepository = $this->createMock(AppointmentRepository::class);
         $this->bookingService = $this->createMock(BookingService::class);
-        $this->availabilityService = $this->createMock(AvailabilityService::class);
         $this->validator = $this->createMock(AppointmentValidator::class);
         $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->controller = new AppointmentController(
             $this->appointmentRepository,
             $this->bookingService,
-            $this->availabilityService,
             $this->validator,
             $this->logger
         );

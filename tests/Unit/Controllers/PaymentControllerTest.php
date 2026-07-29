@@ -6,6 +6,8 @@ namespace Tests\Unit\Controllers;
 
 use PHPUnit\Framework\TestCase;
 use App\Application\Controllers\PaymentController;
+use App\Application\Services\PaymentService;
+use App\Application\Validators\PaymentValidator;
 use App\Domain\Repositories\PaymentRepository;
 use Psr\Log\LoggerInterface;
 
@@ -13,15 +15,21 @@ class PaymentControllerTest extends TestCase
 {
     private PaymentController $controller;
     private $paymentRepository;
+    private $paymentService;
+    private $paymentValidator;
     private $logger;
 
     protected function setUp(): void
     {
         $this->paymentRepository = $this->createMock(PaymentRepository::class);
+        $this->paymentService = $this->createMock(PaymentService::class);
+        $this->paymentValidator = $this->createMock(PaymentValidator::class);
         $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->controller = new PaymentController(
             $this->paymentRepository,
+            $this->paymentService,
+            $this->paymentValidator,
             $this->logger
         );
     }

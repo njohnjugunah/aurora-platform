@@ -6,6 +6,7 @@ namespace Tests\Unit\Controllers;
 
 use PHPUnit\Framework\TestCase;
 use App\Application\Controllers\InventoryController;
+use App\Application\Services\InventoryService;
 use App\Domain\Repositories\StockRepository;
 use Psr\Log\LoggerInterface;
 
@@ -13,13 +14,15 @@ class InventoryControllerTest extends TestCase
 {
     private InventoryController $controller;
     private $repository;
+    private $service;
     private $logger;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(StockRepository::class);
+        $this->service = $this->createMock(InventoryService::class);
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->controller = new InventoryController($this->repository, $this->logger);
+        $this->controller = new InventoryController($this->repository, $this->service, $this->logger);
     }
 
     public function testListProducts(): void
