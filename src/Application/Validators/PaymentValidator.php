@@ -15,7 +15,8 @@ class PaymentValidator
         if (empty($data['method']) || !is_string($data['method'])) {
             $errors[] = ['field' => 'method', 'message' => 'Payment method is required'];
         } elseif (!in_array($data['method'], ['cash', 'mpesa', 'card', 'bank_transfer'])) {
-            $errors[] = ['field' => 'method', 'message' => 'Invalid payment method. Must be one of: cash, mpesa, card, bank_transfer'];
+            $msg = 'Invalid payment method. Allowed: cash, mpesa, card, bank_transfer';
+            $errors[] = ['field' => 'method', 'message' => $msg];
         }
 
         if (empty($data['amount']) || !is_numeric($data['amount']) || $data['amount'] <= 0) {

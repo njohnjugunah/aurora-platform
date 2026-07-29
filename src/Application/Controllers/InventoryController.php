@@ -192,7 +192,8 @@ class InventoryController
                 $errors[] = ['field' => 'quantity', 'message' => 'Quantity must be an integer'];
             }
 
-            if (empty($request['type']) || !in_array($request['type'], ['purchase', 'adjustment', 'return', 'damage'])) {
+            $types = ['purchase', 'adjustment', 'return', 'damage'];
+            if (empty($request['type']) || !in_array($request['type'], $types)) {
                 $errors[] = ['field' => 'type', 'message' => 'Valid movement type is required'];
             }
 

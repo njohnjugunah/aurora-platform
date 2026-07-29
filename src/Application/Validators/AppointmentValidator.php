@@ -72,7 +72,8 @@ class AppointmentValidator
                 $now = new \DateTime();
 
                 if ($startTime <= $now->modify('+1 hour')) {
-                    $errors[] = ['field' => 'startTime', 'message' => 'Start time must be at least 1 hour in the future'];
+                    $msg = 'Start time must be at least 1 hour in the future';
+                    $errors[] = ['field' => 'startTime', 'message' => $msg];
                 }
             }
         }

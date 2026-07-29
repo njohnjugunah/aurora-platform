@@ -163,7 +163,9 @@ class MySQLAppointmentRepository implements AppointmentRepository
         int $durationMinutes
     ): array
     {
-        $endTime = date('Y-m-d H:i:s', strtotime("+$durationMinutes minutes", strtotime("$scheduledDate $scheduledTime")));
+        $startDateTime = "$scheduledDate $scheduledTime";
+        $timestamp = strtotime($startDateTime);
+        $endTime = date('Y-m-d H:i:s', strtotime("+$durationMinutes minutes", $timestamp));
 
         $stmt = $this->pdo->prepare('
             SELECT * FROM appointments
