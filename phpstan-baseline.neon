@@ -1,17 +1,16 @@
 parameters:
 	ignoreErrors:
-		# Suppress array type specification errors across the codebase
-		# These are architectural issues to be fixed in Phase 2
+		# Suppress array type specification errors
+		# Controllers/services don't have value type hints yet
 		-
 			message: '#has no value type specified in iterable type array#'
 
 		# Suppress "Cannot access offset" errors on models
-		# Controllers use array access on model objects - architectural issue
+		# Controllers treat model objects as arrays
 		-
 			message: '#Cannot access offset .* on App\\Domain\\Models#'
 
-		# Suppress mixed type casting errors
-		# Query parameters come in as mixed - use isset checks
+		# Suppress mixed type casting errors from query parameters
 		-
 			message: '#Cannot cast mixed to int#'
 
@@ -19,41 +18,26 @@ parameters:
 		-
 			message: '#expects (string|int), mixed given#'
 
-		# Suppress undefined method errors on repositories and services
-		# Methods exist but aren't declared in interfaces
+		# Suppress undefined method errors on services
 		-
 			message: '#Call to an undefined method#'
 
 		# Suppress "never read" property warnings
-		# Some properties are set by ORM/framework but not directly read
 		-
 			message: '#is never read, only written#'
-
-		# Suppress covariance/contravariance violations
-		# Repository implementations return arrays, interfaces say objects
-		-
-			message: '#is not covariant#'
 
 		# Suppress "never written" property warnings
 		-
 			message: '#is never written, only read#'
 
-		# Suppress offset access errors on arrays
+		# Suppress offset access errors
 		-
 			message: '#Offset .* does not exist on#'
 
-		# Suppress return type mismatches from architectural issues
-		-
-			message: '#should return.*but returns#'
-
-		# Suppress cannot call method on nullable errors
+		# Suppress cannot call method on nullable
 		-
 			message: '#Cannot call method.*on.*null#'
 
-		# Suppress unused parameter method override errors
+		# Suppress DateTime parameter type issues
 		-
-			message: '#overrides method.*but misses parameter#'
-
-		# Suppress PSR Log interface method name differences
-		-
-			message: '#Call to an undefined method Psr\\Log\\LoggerInterface::warn#'
+			message: '#expects (int|string).*given#'

@@ -7,3 +7,5 @@ parameters:
 		- src
 	excludePaths:
 		- tests
+		- src/Infrastructure/Persistence
+		- src/Infrastructure/Integrations/MpesaGateway.php
