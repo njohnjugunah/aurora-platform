@@ -20,7 +20,7 @@ class PaymentValidatorTest extends TestCase
     public function testValidateSuccessfulCashPayment(): void
     {
         $data = [
-            'paymentMethod' => 'cash',
+            'method' => 'cash',
             'amount' => 1000.00,
         ];
 
@@ -31,7 +31,7 @@ class PaymentValidatorTest extends TestCase
     public function testValidateSuccessfulMpesaPayment(): void
     {
         $data = [
-            'paymentMethod' => 'mpesa',
+            'method' => 'mpesa',
             'amount' => 1000.00,
             'phone' => '+254712345678',
         ];
@@ -56,7 +56,7 @@ class PaymentValidatorTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $data = [
-            'paymentMethod' => 'bitcoin',
+            'method' => 'bitcoin',
             'amount' => 1000.00,
         ];
 
@@ -68,7 +68,7 @@ class PaymentValidatorTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $data = [
-            'paymentMethod' => 'cash',
+            'method' => 'cash',
         ];
 
         $this->validator->validate($data);
@@ -79,7 +79,7 @@ class PaymentValidatorTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $data = [
-            'paymentMethod' => 'cash',
+            'method' => 'cash',
             'amount' => -100.00,
         ];
 
@@ -91,7 +91,7 @@ class PaymentValidatorTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $data = [
-            'paymentMethod' => 'cash',
+            'method' => 'cash',
             'amount' => 0,
         ];
 
@@ -103,7 +103,7 @@ class PaymentValidatorTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $data = [
-            'paymentMethod' => 'mpesa',
+            'method' => 'mpesa',
             'amount' => 1000.00,
         ];
 
@@ -115,7 +115,7 @@ class PaymentValidatorTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $data = [
-            'paymentMethod' => 'mpesa',
+            'method' => 'mpesa',
             'amount' => 1000.00,
             'phone' => 'invalid-phone',
         ];
@@ -126,7 +126,7 @@ class PaymentValidatorTest extends TestCase
     public function testValidateCardPayment(): void
     {
         $data = [
-            'paymentMethod' => 'card',
+            'method' => 'card',
             'amount' => 1000.00,
         ];
 
@@ -137,7 +137,7 @@ class PaymentValidatorTest extends TestCase
     public function testValidateBankTransferPayment(): void
     {
         $data = [
-            'paymentMethod' => 'bank_transfer',
+            'method' => 'bank_transfer',
             'amount' => 5000.00,
         ];
 
