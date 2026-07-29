@@ -38,6 +38,6 @@ class PaymentValidator
 
     private function isValidPhoneNumber(string $phone): bool
     {
-        return preg_match('/^\+?[1-9]\d{1,14}$/', str_replace([' ', '-', '(', ')'], '', $phone));
+        return (bool) preg_match('/^\+?[1-9]\d{1,14}$/', str_replace([' ', '-', '(', ')'], '', $phone));
     }
 }
