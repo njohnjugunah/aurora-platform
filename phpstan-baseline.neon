@@ -24,6 +24,22 @@ parameters:
 		-
 			message: '#Cannot call method.* on.*null#'
 
+		# Suppress undefined method calls (methods not yet implemented)
+		-
+			message: '#Call to an undefined method#'
+
+		# Suppress private method calls
+		-
+			message: '#Call to private method#'
+
+		# Suppress missing/unknown parameters in method calls
+		-
+			message: '#parameter.*in call to method#'
+
+		# Suppress void method result usage
+		-
+			message: '#Result of method#'
+
 		# Suppress property read/write issues
 		-
 			message: '#is never#'
