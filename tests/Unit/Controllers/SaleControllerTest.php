@@ -9,32 +9,40 @@ use App\Application\Controllers\SaleController;
 use App\Application\Services\PaymentService;
 use App\Application\Services\InventoryService;
 use App\Application\Services\LoyaltyService;
+use App\Application\Validators\PaymentValidator;
 use App\Application\Exceptions\ValidationException;
 use App\Domain\Repositories\SaleRepository;
+use App\Domain\Repositories\PaymentRepository;
 use Psr\Log\LoggerInterface;
 
 class SaleControllerTest extends TestCase
 {
     private SaleController $controller;
     private $saleRepository;
+    private $paymentRepository;
     private $paymentService;
     private $inventoryService;
     private $loyaltyService;
+    private $paymentValidator;
     private $logger;
 
     protected function setUp(): void
     {
         $this->saleRepository = $this->createMock(SaleRepository::class);
+        $this->paymentRepository = $this->createMock(PaymentRepository::class);
         $this->paymentService = $this->createMock(PaymentService::class);
         $this->inventoryService = $this->createMock(InventoryService::class);
         $this->loyaltyService = $this->createMock(LoyaltyService::class);
+        $this->paymentValidator = $this->createMock(PaymentValidator::class);
         $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->controller = new SaleController(
             $this->saleRepository,
+            $this->paymentRepository,
             $this->paymentService,
             $this->inventoryService,
             $this->loyaltyService,
+            $this->paymentValidator,
             $this->logger
         );
     }
