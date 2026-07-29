@@ -60,7 +60,7 @@ class InventoryController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to list products', [
                 'error' => $e->getMessage()
             ]);
@@ -100,7 +100,7 @@ class InventoryController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to retrieve stock', [
                 'product_id' => $productId,
                 'error' => $e->getMessage()
@@ -166,7 +166,7 @@ class InventoryController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to retrieve movements', [
                 'product_id' => $productId,
                 'error' => $e->getMessage()
@@ -228,7 +228,7 @@ class InventoryController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to adjust stock', [
                 'product_id' => $productId,
                 'error' => $e->getMessage()
@@ -261,7 +261,7 @@ class InventoryController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to retrieve low stock items', [
                 'error' => $e->getMessage()
             ]);

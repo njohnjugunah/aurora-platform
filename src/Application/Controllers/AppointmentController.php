@@ -65,7 +65,7 @@ class AppointmentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to list appointments', [
                 'error' => $e->getMessage()
             ]);
@@ -113,7 +113,7 @@ class AppointmentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to retrieve appointment', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -160,7 +160,7 @@ class AppointmentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (ValidationException $e) {
+        } catch (ValidationException $e) {
             return [
                 'success' => false,
                 'error' => [
@@ -171,7 +171,7 @@ class AppointmentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (AppointmentConflictException $e) {
+        } catch (AppointmentConflictException $e) {
             $this->logger->warning('Appointment conflict', [
                 'staff_id' => $request['staffId'] ?? null,
                 'start_time' => $request['startTime'] ?? null
@@ -186,7 +186,7 @@ class AppointmentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (InvalidBookingException $e) {
+        } catch (InvalidBookingException $e) {
             return [
                 'success' => false,
                 'error' => [
@@ -196,7 +196,7 @@ class AppointmentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to create appointment', [
                 'error' => $e->getMessage()
             ]);
@@ -270,7 +270,7 @@ class AppointmentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (ValidationException $e) {
+        } catch (ValidationException $e) {
             return [
                 'success' => false,
                 'error' => [
@@ -281,7 +281,7 @@ class AppointmentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (AppointmentConflictException $e) {
+        } catch (AppointmentConflictException $e) {
             return [
                 'success' => false,
                 'error' => [
@@ -291,7 +291,7 @@ class AppointmentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to update appointment', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -361,7 +361,7 @@ class AppointmentController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to cancel appointment', [
                 'id' => $id,
                 'error' => $e->getMessage()

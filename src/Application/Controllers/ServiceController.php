@@ -57,7 +57,7 @@ class ServiceController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to list services', [
                 'error' => $e->getMessage()
             ]);
@@ -99,7 +99,7 @@ class ServiceController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to retrieve service', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -167,7 +167,7 @@ class ServiceController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to create service', [
                 'error' => $e->getMessage()
             ]);
@@ -241,7 +241,7 @@ class ServiceController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to update service', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -284,7 +284,7 @@ class ServiceController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to delete service', [
                 'id' => $id,
                 'error' => $e->getMessage()

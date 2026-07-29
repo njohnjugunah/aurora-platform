@@ -71,7 +71,7 @@ class SaleController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to list sales', [
                 'error' => $e->getMessage()
             ]);
@@ -111,7 +111,7 @@ class SaleController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to retrieve sale', [
                 'id' => $id,
                 'error' => $e->getMessage()
@@ -172,7 +172,7 @@ class SaleController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to create sale', [
                 'error' => $e->getMessage()
             ]);
@@ -267,7 +267,7 @@ class SaleController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (ValidationException $e) {
+        } catch (ValidationException $e) {
             return [
                 'success' => false,
                 'error' => [
@@ -278,7 +278,7 @@ class SaleController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to process payment', [
                 'sale_id' => $id,
                 'error' => $e->getMessage()
@@ -355,7 +355,7 @@ class SaleController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to refund sale', [
                 'sale_id' => $id,
                 'error' => $e->getMessage()

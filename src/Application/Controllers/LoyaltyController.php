@@ -51,7 +51,7 @@ class LoyaltyController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to retrieve loyalty points', [
                 'customer_id' => $customerId,
                 'error' => $e->getMessage()
@@ -91,7 +91,7 @@ class LoyaltyController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to retrieve leaderboard', [
                 'error' => $e->getMessage()
             ]);
@@ -149,7 +149,7 @@ class LoyaltyController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to retrieve loyalty transactions', [
                 'customer_id' => $customerId,
                 'error' => $e->getMessage()
@@ -208,7 +208,7 @@ class LoyaltyController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to redeem points', [
                 'customer_id' => $customerId,
                 'error' => $e->getMessage()
@@ -271,7 +271,7 @@ class LoyaltyController
                 'meta' => ['timestamp' => date('c')]
             ];
 
-} catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to retrieve tier benefits', [
                 'error' => $e->getMessage()
             ]);
