@@ -18,7 +18,7 @@ interface StockRepository
 
     public function getMovements(int $productId, array $filters, int $page, int $limit): ?array;
 
-    public function getLowStockItems(int $limit = 50): array;
+    public function getLowStockItems(int $limit = 50): ?array;
 
     public function update(int $productId, array $data): int;
 
