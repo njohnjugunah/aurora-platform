@@ -21,10 +21,10 @@ class InventoryValidatorTest extends TestCase
     {
         $data = [
             'quantity' => 50,
-            'adjustmentType' => 'purchase',
+            'type' => 'purchase',
         ];
 
-        $this->validator->validate($data);
+        $this->validator->validateAdjustment($data);
         $this->assertTrue(true);
     }
 
@@ -32,10 +32,10 @@ class InventoryValidatorTest extends TestCase
     {
         $data = [
             'quantity' => 10,
-            'adjustmentType' => 'adjustment',
+            'type' => 'adjustment',
         ];
 
-        $this->validator->validate($data);
+        $this->validator->validateAdjustment($data);
         $this->assertTrue(true);
     }
 
@@ -43,10 +43,10 @@ class InventoryValidatorTest extends TestCase
     {
         $data = [
             'quantity' => 5,
-            'adjustmentType' => 'return',
+            'type' => 'return',
         ];
 
-        $this->validator->validate($data);
+        $this->validator->validateAdjustment($data);
         $this->assertTrue(true);
     }
 
@@ -54,10 +54,10 @@ class InventoryValidatorTest extends TestCase
     {
         $data = [
             'quantity' => 3,
-            'adjustmentType' => 'damage',
+            'type' => 'damage',
         ];
 
-        $this->validator->validate($data);
+        $this->validator->validateAdjustment($data);
         $this->assertTrue(true);
     }
 
@@ -66,10 +66,10 @@ class InventoryValidatorTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $data = [
-            'adjustmentType' => 'purchase',
+            'type' => 'purchase',
         ];
 
-        $this->validator->validate($data);
+        $this->validator->validateAdjustment($data);
     }
 
     public function testValidateInvalidQuantityType(): void
@@ -78,10 +78,10 @@ class InventoryValidatorTest extends TestCase
 
         $data = [
             'quantity' => 'fifty',
-            'adjustmentType' => 'purchase',
+            'type' => 'purchase',
         ];
 
-        $this->validator->validate($data);
+        $this->validator->validateAdjustment($data);
     }
 
     public function testValidateNegativeQuantity(): void
@@ -90,10 +90,10 @@ class InventoryValidatorTest extends TestCase
 
         $data = [
             'quantity' => -10,
-            'adjustmentType' => 'purchase',
+            'type' => 'purchase',
         ];
 
-        $this->validator->validate($data);
+        $this->validator->validateAdjustment($data);
     }
 
     public function testValidateZeroQuantity(): void
@@ -102,10 +102,10 @@ class InventoryValidatorTest extends TestCase
 
         $data = [
             'quantity' => 0,
-            'adjustmentType' => 'purchase',
+            'type' => 'purchase',
         ];
 
-        $this->validator->validate($data);
+        $this->validator->validateAdjustment($data);
     }
 
     public function testValidateMissingAdjustmentType(): void
@@ -116,7 +116,7 @@ class InventoryValidatorTest extends TestCase
             'quantity' => 50,
         ];
 
-        $this->validator->validate($data);
+        $this->validator->validateAdjustment($data);
     }
 
     public function testValidateInvalidAdjustmentType(): void
@@ -125,20 +125,20 @@ class InventoryValidatorTest extends TestCase
 
         $data = [
             'quantity' => 50,
-            'adjustmentType' => 'theft',
+            'type' => 'theft',
         ];
 
-        $this->validator->validate($data);
+        $this->validator->validateAdjustment($data);
     }
 
     public function testValidateLargeQuantity(): void
     {
         $data = [
             'quantity' => 10000,
-            'adjustmentType' => 'purchase',
+            'type' => 'purchase',
         ];
 
-        $this->validator->validate($data);
+        $this->validator->validateAdjustment($data);
         $this->assertTrue(true);
     }
 }
