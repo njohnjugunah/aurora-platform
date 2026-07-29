@@ -18,12 +18,14 @@ class AuthControllerTest extends TestCase
     private $authService;
     private $loginValidator;
     private $logger;
+    private $jwtService;
 
     protected function setUp(): void
     {
         $this->authService = $this->createMock(AuthenticationService::class);
         $this->loginValidator = $this->createMock(LoginValidator::class);
         $this->logger = $this->createMock(LoggerInterface::class);
+        $this->jwtService = $this->createMock(JWTService::class);
 
         $this->controller = new AuthController(
             $this->authService,

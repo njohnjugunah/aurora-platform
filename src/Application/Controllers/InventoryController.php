@@ -49,6 +49,7 @@ class InventoryController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => $result['products'],
                 'pagination' => [
                     'page' => $page,
@@ -67,6 +68,7 @@ class InventoryController
 
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'SERVER_ERROR',
                     'message' => 'Failed to retrieve products'
@@ -96,6 +98,7 @@ class InventoryController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => $stock,
                 'meta' => ['timestamp' => date('c')]
             ];
@@ -108,6 +111,7 @@ class InventoryController
 
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'SERVER_ERROR',
                     'message' => 'Failed to retrieve stock'
@@ -155,6 +159,7 @@ class InventoryController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => $result['movements'],
                 'pagination' => [
                     'page' => $page,
@@ -174,6 +179,7 @@ class InventoryController
 
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'SERVER_ERROR',
                     'message' => 'Failed to retrieve stock movements'
@@ -225,6 +231,7 @@ class InventoryController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => $result,
                 'meta' => ['timestamp' => date('c')]
             ];
@@ -237,6 +244,7 @@ class InventoryController
 
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'SERVER_ERROR',
                     'message' => 'Failed to adjust stock'
@@ -258,6 +266,7 @@ class InventoryController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => $result,
                 'meta' => ['timestamp' => date('c')]
             ];
@@ -269,6 +278,7 @@ class InventoryController
 
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'SERVER_ERROR',
                     'message' => 'Failed to retrieve low stock items'

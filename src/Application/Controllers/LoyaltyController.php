@@ -40,6 +40,7 @@ class LoyaltyController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => [
                     'customerId' => $customerId,
                     'points' => $points['points'],
@@ -59,6 +60,7 @@ class LoyaltyController
 
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'SERVER_ERROR',
                     'message' => 'Failed to retrieve loyalty points'
@@ -86,6 +88,7 @@ class LoyaltyController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => $result,
                 'pagination' => ['limit' => $limit, 'total' => count($result)],
                 'meta' => ['timestamp' => date('c')]
@@ -98,6 +101,7 @@ class LoyaltyController
 
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'SERVER_ERROR',
                     'message' => 'Failed to retrieve leaderboard'
@@ -138,6 +142,7 @@ class LoyaltyController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => $result['transactions'],
                 'pagination' => [
                     'page' => $page,
@@ -157,6 +162,7 @@ class LoyaltyController
 
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'SERVER_ERROR',
                     'message' => 'Failed to retrieve loyalty transactions'
@@ -204,6 +210,7 @@ class LoyaltyController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => $result,
                 'meta' => ['timestamp' => date('c')]
             ];
@@ -216,6 +223,7 @@ class LoyaltyController
 
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'SERVER_ERROR',
                     'message' => 'Failed to redeem points'
@@ -267,6 +275,7 @@ class LoyaltyController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => $tiers[$tier],
                 'meta' => ['timestamp' => date('c')]
             ];
@@ -278,6 +287,7 @@ class LoyaltyController
 
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'SERVER_ERROR',
                     'message' => 'Failed to retrieve tier benefits'

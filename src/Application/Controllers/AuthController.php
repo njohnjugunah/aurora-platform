@@ -34,6 +34,7 @@ class AuthController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => $result,
                 'meta' => ['timestamp' => date('c')]
             ];
@@ -41,6 +42,7 @@ class AuthController
         } catch (ValidationException $e) {
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'VALIDATION_ERROR',
                     'message' => $e->getMessage(),
@@ -56,6 +58,7 @@ class AuthController
 
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'UNAUTHORIZED',
                     'message' => 'Invalid email or password'
@@ -71,6 +74,7 @@ class AuthController
 
         return [
             'success' => true,
+            'status' => 'success',
             'meta' => ['timestamp' => date('c')]
         ];
     }
@@ -88,6 +92,7 @@ class AuthController
 
             return [
                 'success' => true,
+                'status' => 'success',
                 'data' => $result,
                 'meta' => ['timestamp' => date('c')]
             ];
@@ -95,6 +100,7 @@ class AuthController
         } catch (\Exception $e) {
             return [
                 'success' => false,
+                'status' => 'error',
                 'error' => [
                     'code' => 'UNAUTHORIZED',
                     'message' => 'Token refresh failed'

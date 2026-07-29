@@ -52,7 +52,12 @@
       "Bash(git commit -m 'fix: correct controller constructor parameters in unit tests *)",
       "Bash(git commit -m 'fix: correct remaining controller constructor parameters in tests *)",
       "Bash(git commit -m 'fix: correct phpunit configuration and test service dependencies *)",
-      "Bash(git commit -m 'fix: correct strict type violations and namespace issues *)"
+      "Bash(git commit -m 'fix: correct strict type violations and namespace issues *)",
+      "Bash(vendor/bin/phpunit tests/Unit --no-coverage)",
+      "Bash(git commit -m 'fix: cast preg_match return value to bool in PaymentValidator *)",
+      "Bash(git commit -m 'fix: correct test data key to match PaymentValidator expectation *)",
+      "Bash(git commit -m 'fix: correct InventoryValidatorTest to match validator API *)",
+      "Bash(git commit -m 'fix: resolve API/interface mismatches and standardize response format *)"
     ]
   }
 }
