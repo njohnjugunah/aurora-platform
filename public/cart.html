@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - GlamByMariga</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/glambymariga-theme.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f1e8;
+        }
+
+        .cart-header {
+            background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .cart-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            background: #f5f1e8;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            color: var(--rose-gold-dark);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-sku {
+            color: var(--gray-medium);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-price {
+            color: var(--accent-gold);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .qty-btn {
+            background: #f5f1e8;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .qty-btn:hover {
+            background: var(--accent-gold);
+            color: white;
+        }
+
+        .qty-input {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.35rem;
+            font-size: 0.9rem;
+        }
+
+        .item-subtotal {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+
+        .subtotal {
+            color: var(--rose-gold-dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            color: #c82333;
+        }
+
+        .cart-summary {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-title {
+            color: var(--rose-gold-dark);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .summary-row.total {
+            border-top: 2px solid var(--accent-gold);
+            padding-top: 0.75rem;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--rose-gold-dark);
+        }
+
+        .coupon-section {
+            margin: 1rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .coupon-input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .coupon-input-group input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .coupon-input-group button {
+            padding: 0.5rem 1rem;
+            background: var(--accent-gold);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .coupon-input-group button:hover {
+            background: var(--rose-gold-dark);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold));
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .checkout-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .continue-shopping {
+            width: 100%;
+            background: white;
+            color: var(--rose-gold-dark);
+            border: 2px solid var(--accent-gold);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .continue-shopping:hover {
+            background: var(--accent-gold);
+            color: white;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--gray-medium);
+        }
+
+        .empty-cart i {
+            font-size: 4rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-summary {
+                position: static;
+            }
+
+            .item-image {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <span style="color: var(--rose-gold-dark); font-weight: 700; font-size: 1.3rem;">
+                    <i class="fas fa-sparkles"></i> GlamByMariga
+                </span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Cart Header -->
+    <div class="cart-header">
+        <div class="container">
+            <h1><i class="fas fa-shopping-bag"></i> Shopping Cart</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="cart-container" id="cartContainer">
+            <div class="cart-items">
+                <div class="empty-cart">
+                    <i class="fas fa-inbox"></i>
+                    <h5>Your cart is empty</h5>
+                    <p>Start adding items to get started!</p>
+                    <a href="shop.html" class="btn btn-primary mt-3" style="background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold)); border: none;">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold)); color: white; padding: 3rem 0; margin-top: 3rem;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>GlamByMariga</h5>
+                    <p>Your destination for premium beauty products and services.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="index.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Home</a></li>
+                        <li><a href="shop.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Shop</a></li>
+                        <li><a href="book-appointment.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Book Appointment</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <p>Email: info@glambymariga.com<br>Phone: +254 712 345 678</p>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 2rem 0;">
+            <div style="text-align: center; opacity: 0.8;">
+                <p>&copy; 2024 GlamByMariga. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+        });
+
+        function loadCart() {
+            fetch('/ajax/shop/get-cart.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.items.length > 0) {
+                        displayCart(data.items, data.total);
+                    } else {
+                        // Show empty cart message
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function displayCart(items, total) {
+            const container = document.getElementById('cartContainer');
+
+            const itemsHtml = items.map(item => `
+                <div class="cart-item">
+                    <div class="item-image">
+                        <img src="${item.image_url || '/images/placeholder.jpg'}" alt="${item.name}">
+                    </div>
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-sku">${item.sku || 'SKU: ' + item.product_id}</div>
+                        <div class="item-price">KES ${parseFloat(item.price).toLocaleString()}</div>
+                        <div class="item-quantity">
+                            <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">−</button>
+                            <input type="number" class="qty-input" value="${item.quantity}" onchange="updateQuantity(${item.id}, this.value)">
+                            <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                        </div>
+                    </div>
+                    <div class="item-subtotal">
+                        <div class="subtotal">KES ${(parseFloat(item.price) * item.quantity).toLocaleString()}</div>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            const summaryHtml = `
+                <div class="summary-title">Order Summary</div>
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>KES ${parseFloat(total).toLocaleString()}</span>
+                </div>
+                <div class="coupon-section">
+                    <div class="coupon-input-group">
+                        <input type="text" id="couponCode" placeholder="Coupon code">
+                        <button onclick="applyCoupon()">Apply</button>
+                    </div>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span>Calculated at checkout</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span>KES ${parseFloat(total).toLocaleString()}</span>
+                </div>
+                <button class="checkout-btn" onclick="goToCheckout()">
+                    <i class="fas fa-lock"></i> Proceed to Checkout
+                </button>
+                <button class="continue-shopping" onclick="window.location.href='shop.html'">
+                    Continue Shopping
+                </button>
+            `;
+
+            container.innerHTML = `
+                <div class="cart-items">${itemsHtml}</div>
+                <div class="cart-summary">${summaryHtml}</div>
+            `;
+        }
+
+        function updateQuantity(cartItemId, newQuantity) {
+            newQuantity = Math.max(1, parseInt(newQuantity));
+
+            fetch('/ajax/shop/update-cart.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    cart_item_id: cartItemId,
+                    quantity: newQuantity
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadCart();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function removeFromCart(cartItemId) {
+            if (!confirm('Remove this item from cart?')) return;
+
+            fetch('/ajax/shop/update-cart.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    cart_item_id: cartItemId,
+                    quantity: 0
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadCart();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('couponCode').value;
+            if (!code) {
+                alert('Please enter a coupon code');
+                return;
+            }
+            alert('Coupon validation coming soon!');
+        }
+
+        function goToCheckout() {
+            window.location.href = 'checkout.html';
+        }
+    </script>
+</body>
+</html>
