@@ -424,18 +424,153 @@
                     </div>
                 </div>
 
-                <!-- Placeholder sections -->
+                <!-- Customers Section -->
                 <div id="customersSection" style="display: none;">
-                    <p>Customer management coming soon</p>
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="text" id="customerSearch" placeholder="Search customers..." class="form-control" style="max-width: 400px;">
+                    </div>
+                    <div class="metrics-grid" style="margin-bottom: 2rem;">
+                        <div class="metric-card">
+                            <div class="metric-label">Total Customers</div>
+                            <div class="metric-value" id="totalCustomers">0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Repeat Customers</div>
+                            <div class="metric-value" id="repeatCustomers">0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">High Value</div>
+                            <div class="metric-value" id="highValueCustomers">0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Retention Rate</div>
+                            <div class="metric-value" id="retentionRate">0%</div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Orders</th>
+                                    <th>Lifetime Value</th>
+                                    <th>Last Order</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customersTable">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 2rem;">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
+                <!-- Inventory Section -->
                 <div id="inventorySection" style="display: none;">
-                    <p>Inventory management coming soon</p>
+                    <div class="metrics-grid" style="margin-bottom: 2rem;">
+                        <div class="metric-card">
+                            <div class="metric-label">Total Stock Value</div>
+                            <div class="metric-value" id="totalStockValue">KES 0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Total Units</div>
+                            <div class="metric-value" id="totalStockUnits">0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Low Stock Items</div>
+                            <div class="metric-value" id="inventoryLowStock">0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Out of Stock</div>
+                            <div class="metric-value" id="inventoryOutOfStock">0</div>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Low Stock Items</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>SKU</th>
+                                    <th>Stock</th>
+                                    <th>Price</th>
+                                    <th>Value</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lowStockTable">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 2rem;">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
+                <!-- Analytics Section -->
                 <div id="analyticsSection" style="display: none;">
-                    <p>Analytics coming soon</p>
+                    <div style="margin-bottom: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                        <div class="table-container">
+                            <h3 class="chart-title">Top 5 Products</h3>
+                            <canvas id="topProductsChart" style="max-height: 300px;"></canvas>
+                        </div>
+                        <div class="table-container">
+                            <h3 class="chart-title">Order Status Distribution</h3>
+                            <canvas id="orderStatusChart" style="max-height: 300px;"></canvas>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Daily Revenue (Last 30 Days)</h2>
+                    <div class="table-container">
+                        <canvas id="revenueChart" style="max-height: 400px;"></canvas>
+                    </div>
+
+                    <h2 class="section-title">Top Customers</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Orders</th>
+                                    <th>Total Spent</th>
+                                    <th>Avg Order</th>
+                                </tr>
+                            </thead>
+                            <tbody id="topCustomersTable">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; padding: 2rem;">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
+                <!-- Settings Section -->
                 <div id="settingsSection" style="display: none;">
-                    <p>Settings coming soon</p>
+                    <div class="table-container">
+                        <h3 class="chart-title">Business Settings</h3>
+                        <div style="padding: 2rem;">
+                            <div style="margin-bottom: 1.5rem;">
+                                <label style="font-weight: 600; color: var(--rose-gold-dark); margin-bottom: 0.5rem; display: block;">Business Name</label>
+                                <input type="text" class="form-control" value="GlamByMariga" style="max-width: 400px;">
+                            </div>
+                            <div style="margin-bottom: 1.5rem;">
+                                <label style="font-weight: 600; color: var(--rose-gold-dark); margin-bottom: 0.5rem; display: block;">Email</label>
+                                <input type="email" class="form-control" value="info@glambymariga.com" style="max-width: 400px;">
+                            </div>
+                            <div style="margin-bottom: 1.5rem;">
+                                <label style="font-weight: 600; color: var(--rose-gold-dark); margin-bottom: 0.5rem; display: block;">Phone</label>
+                                <input type="tel" class="form-control" value="+254 712 345 678" style="max-width: 400px;">
+                            </div>
+                            <button class="btn" style="background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold)); color: white; border: none;">
+                                <i class="fas fa-save"></i> Save Settings
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -486,6 +621,12 @@
                 loadOrders();
             } else if (section === 'products') {
                 loadProducts();
+            } else if (section === 'customers') {
+                loadCustomers();
+            } else if (section === 'inventory') {
+                loadInventory();
+            } else if (section === 'analytics') {
+                loadAnalytics();
             }
         }
 
@@ -597,6 +738,181 @@
 
         function editProduct(productId) {
             window.location.href = `product-edit.html?id=${productId}`;
+        }
+
+        function loadCustomers() {
+            fetch('/ajax/admin/get-customers.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const segments = data.data.segments;
+                        document.getElementById('totalCustomers').textContent = segments.total_customers || 0;
+                        document.getElementById('repeatCustomers').textContent = segments.repeat_customers || 0;
+                        document.getElementById('highValueCustomers').textContent = segments.high_value_customers || 0;
+                        document.getElementById('retentionRate').textContent = data.data.retention_rate + '%';
+
+                        const tbody = document.getElementById('customersTable');
+                        if (data.data.customers.length === 0) {
+                            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">No customers yet</td></tr>';
+                            return;
+                        }
+
+                        tbody.innerHTML = data.data.customers.map(customer => `
+                            <tr>
+                                <td>${customer.name}</td>
+                                <td>${customer.email}</td>
+                                <td>${customer.phone}</td>
+                                <td>${customer.total_orders || 0}</td>
+                                <td>KES ${parseFloat(customer.lifetime_value || 0).toLocaleString()}</td>
+                                <td>${customer.last_order_date ? new Date(customer.last_order_date).toLocaleDateString() : 'Never'}</td>
+                            </tr>
+                        `).join('');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function loadInventory() {
+            fetch('/ajax/admin/get-inventory.php?type=status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const status = data.data.inventory_status;
+                        document.getElementById('totalStockValue').textContent = 'KES ' + parseFloat(status.total_value || 0).toLocaleString();
+                        document.getElementById('totalStockUnits').textContent = status.total_units || 0;
+                        document.getElementById('inventoryLowStock').textContent = data.data.low_stock_count;
+                        document.getElementById('inventoryOutOfStock').textContent = data.data.out_of_stock_count;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+
+            fetch('/ajax/admin/get-inventory.php?type=low_stock&limit=10')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const tbody = document.getElementById('lowStockTable');
+                        if (data.data.items.length === 0) {
+                            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">All items in stock</td></tr>';
+                            return;
+                        }
+
+                        tbody.innerHTML = data.data.items.map(item => `
+                            <tr>
+                                <td>${item.product_name}</td>
+                                <td>${item.sku}</td>
+                                <td>${item.stock}</td>
+                                <td>KES ${parseFloat(item.price).toLocaleString()}</td>
+                                <td>KES ${parseFloat(item.value || 0).toLocaleString()}</td>
+                                <td><button class="action-btn" onclick="restockItem(${item.id})"><i class="fas fa-plus"></i></button></td>
+                            </tr>
+                        `).join('');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function loadAnalytics() {
+            // Load revenue chart
+            fetch('/ajax/admin/get-analytics.php?type=sales')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.data.daily_sales) {
+                        const labels = data.data.daily_sales.map(d => d.date);
+                        const revenues = data.data.daily_sales.map(d => d.revenue);
+
+                        const ctx = document.getElementById('revenueChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Daily Revenue (KES)',
+                                    data: revenues,
+                                    borderColor: '#B76E79',
+                                    backgroundColor: 'rgba(183, 110, 121, 0.1)',
+                                    tension: 0.4,
+                                    fill: true
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        labels: { color: '#B76E79' }
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: { color: '#999' }
+                                    },
+                                    x: {
+                                        ticks: { color: '#999' }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                })
+                .catch(error => console.error('Error loading revenue chart:', error));
+
+            // Load order status distribution
+            fetch('/ajax/admin/get-analytics.php?type=status_distribution')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.data.order_status) {
+                        const labels = data.data.order_status.map(s => s.status);
+                        const counts = data.data.order_status.map(s => s.count);
+
+                        const ctx = document.getElementById('orderStatusChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    data: counts,
+                                    backgroundColor: ['#ffc107', '#17a2b8', '#007bff', '#28a745', '#dc3545']
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom',
+                                        labels: { color: '#B76E79' }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                })
+                .catch(error => console.error('Error loading status chart:', error));
+
+            // Load top customers
+            fetch('/ajax/admin/get-analytics.php?type=customers')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.data.top_customers) {
+                        const tbody = document.getElementById('topCustomersTable');
+                        tbody.innerHTML = data.data.top_customers.slice(0, 5).map(customer => `
+                            <tr>
+                                <td>${customer.name}</td>
+                                <td>${customer.total_orders || 0}</td>
+                                <td>KES ${parseFloat(customer.lifetime_value || 0).toLocaleString()}</td>
+                                <td>KES ${parseFloat(customer.avg_order_value || 0).toLocaleString()}</td>
+                            </tr>
+                        `).join('');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function restockItem(variantId) {
+            const quantity = prompt('Enter restock quantity:');
+            if (quantity) {
+                alert('Restock feature coming soon');
+            }
         }
 
         function logout() {
