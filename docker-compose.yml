@@ -6,19 +6,24 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: aurora-app
+    restart: unless-stopped
     ports:
-      - "8000:80"
+      - "8000:9000"
     volumes:
       - .:/app
       - /app/vendor
+      - /app/node_modules
     environment:
-      - APP_ENV=development
-      - APP_DEBUG=true
+      - APP_ENV=${APP_ENV:-development}
+      - APP_DEBUG=${APP_DEBUG:-false}
       - DB_HOST=mysql
-      - DB_USERNAME=aurora
-      - DB_PASSWORD=secret
-      - DB_DATABASE=aurora_dev
+      - DB_USERNAME=${DB_USERNAME:-aurora}
+      - DB_PASSWORD=${DB_PASSWORD:-change_me_in_production}
+      - DB_DATABASE=${DB_DATABASE:-aurora_dev}
       - REDIS_HOST=redis
+      - SESSION_SECURE=${SESSION_SECURE:-false}
+      - SESSION_HTTPONLY=true
+      - SESSION_SAMESITE=Lax
     depends_on:
       - mysql
       - redis
@@ -33,13 +38,13 @@ services:
   mysql:
     image: mysql:8.0
     container_name: aurora-mysql
-    ports:
-      - "3306:3306"
+    restart: unless-stopped
+    # NOTE: Do NOT expose MySQL port in production
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: aurora_dev
-      MYSQL_USER: aurora
-      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-change_me}
+      MYSQL_DATABASE: ${DB_DATABASE:-aurora_dev}
+      MYSQL_USER: ${DB_USERNAME:-aurora}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-change_me_in_production}
     volumes:
       - mysql_data:/var/lib/mysql
       - ./docker/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
@@ -50,12 +55,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+    # Security: Add command to enforce strict mode and other security settings
+    command: --default-authentication-plugin=mysql_native_password --sql-mode="STRICT_TRANS_TABLES,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
 
   redis:
     image: redis:7-alpine
     container_name: aurora-redis
-    ports:
-      - "6379:6379"
+    restart: unless-stopped
+    # NOTE: Do NOT expose Redis port in production, add requirepass
+    command: redis-server --requirepass ${REDIS_PASSWORD:-change_me}
     volumes:
       - redis_data:/data
     networks:
@@ -69,17 +77,23 @@ services:
   nginx:
     image: nginx:alpine
     container_name: aurora-nginx
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./docker/nginx.conf:/etc/nginx/nginx.conf
-      - ./public:/app/public
-      - ./docker/ssl:/etc/nginx/ssl
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./public:/app/public:ro
+      - ./docker/ssl:/etc/nginx/ssl:ro
     depends_on:
       - app
     networks:
       - aurora
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
 volumes:
   mysql_data:
