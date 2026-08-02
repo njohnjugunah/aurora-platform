@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M-Pesa Payment Demo - GlamByMariga</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/glambymariga-theme.css" rel="stylesheet">
+    <link href="css/luxury-components.css" rel="stylesheet">
+    <link href="css/animations.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        .payment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        .payment-form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-form-group input,
+        .payment-form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .payment-form-group input:focus,
+        .payment-form-group select:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.1);
+        }
+
+        .payment-summary {
+            background: var(--soft-background);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--gray-medium);
+        }
+
+        .summary-row.total {
+            border-top: 1px solid #ddd;
+            padding-top: 0.5rem;
+            font-weight: 600;
+            color: var(--rose-gold-dark);
+            font-size: 1.1rem;
+        }
+
+        .payment-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(183, 110, 121, 0.3);
+        }
+
+        .payment-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #1565c0;
+        }
+
+        .test-credentials {
+            background: #fff3e0;
+            border: 1px solid #ffb74d;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+        }
+
+        .test-credentials h4 {
+            color: #e65100;
+            margin-bottom: 1rem;
+        }
+
+        .credential-item {
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+        }
+
+        .credential-label {
+            font-weight: 600;
+            color: #e65100;
+        }
+
+        .success-screen {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-screen .icon {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 1rem;
+        }
+
+        .hero-banner-payment {
+            background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold));
+            padding: 3rem 1rem;
+            color: white;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-banner-payment h1 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-banner-payment p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="nav-brand"><i class="fas fa-sparkles"></i> GlamByMariga</a>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item"><a href="about.html">About</a></li>
+                    <li class="nav-item"><a href="index.html#services">Services</a></li>
+                    <li class="nav-item"><a href="gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="hero-banner-payment fade-in">
+            <h1>M-Pesa Payment Demo</h1>
+            <p>Test the payment integration with M-Pesa Daraja API</p>
+        </div>
+
+        <div class="payment-card fade-in">
+            <h2 style="text-align: center; color: var(--rose-gold-dark); margin-bottom: 2rem;">Complete Your Payment</h2>
+
+            <div class="info-box">
+                <strong>ℹ️ Demo Mode:</strong> This is a demonstration of the payment system. Transactions will be processed through M-Pesa Daraja API.
+            </div>
+
+            <form id="paymentForm" onsubmit="handlePayment(event)">
+                <!-- Booking ID -->
+                <div class="payment-form-group">
+                    <label for="bookingId">
+                        <i class="fas fa-bookmark" style="color: var(--accent-gold); margin-right: 0.5rem;"></i>
+                        Booking ID
+                    </label>
+                    <input
+                        type="number"
+                        id="bookingId"
+                        name="bookingId"
+                        value="1"
+                        min="1"
+                        required
+                        placeholder="Enter booking ID"
+                    >
+                    <small style="color: #999; display: block; margin-top: 0.3rem;">Enter a valid booking number from your account</small>
+                </div>
+
+                <!-- Service Type -->
+                <div class="payment-form-group">
+                    <label for="serviceType">
+                        <i class="fas fa-sparkles" style="color: var(--accent-gold); margin-right: 0.5rem;"></i>
+                        Service Type
+                    </label>
+                    <select id="serviceType" name="serviceType" onchange="updateAmount()" required>
+                        <option value="">-- Select Service --</option>
+                        <option value="lashes" data-price="3500">Classic Lash Extensions - KES 3,500</option>
+                        <option value="lashes-volume" data-price="5000">Volume Lash Extensions - KES 5,000</option>
+                        <option value="lashes-mega" data-price="7500">Mega Volume Lashes - KES 7,500</option>
+                        <option value="hair" data-price="5000">Hair Installation - KES 5,000</option>
+                        <option value="beauty" data-price="2500">Beauty Treatment - KES 2,500</option>
+                    </select>
+                </div>
+
+                <!-- Amount -->
+                <div class="payment-form-group">
+                    <label for="amount">
+                        <i class="fas fa-money-bill-wave" style="color: var(--accent-gold); margin-right: 0.5rem;"></i>
+                        Amount (KES)
+                    </label>
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        min="1"
+                        max="999999"
+                        step="100"
+                        required
+                        placeholder="0.00"
+                    >
+                    <small style="color: #999; display: block; margin-top: 0.3rem;">Amount must be between 1 and 999,999</small>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="payment-form-group">
+                    <label for="phoneNumber">
+                        <i class="fas fa-phone" style="color: var(--accent-gold); margin-right: 0.5rem;"></i>
+                        Phone Number
+                    </label>
+                    <input
+                        type="tel"
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        value="254708374149"
+                        required
+                        placeholder="254712345678"
+                    >
+                    <small style="color: #999; display: block; margin-top: 0.3rem;">Format: 254712345678 or 0712345678</small>
+                </div>
+
+                <!-- Payment Summary -->
+                <div class="payment-summary">
+                    <div class="summary-row">
+                        <span>Service Amount:</span>
+                        <span>KES <span id="summaryAmount">0.00</span></span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Processing Fee:</span>
+                        <span>KES 0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total to Pay:</span>
+                        <span>KES <span id="totalAmount">0.00</span></span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="payment-btn" id="payBtn">
+                    <i class="fas fa-lock" style="margin-right: 0.5rem;"></i>
+                    Pay with M-Pesa
+                </button>
+            </form>
+
+            <!-- Test Credentials -->
+            <div class="test-credentials">
+                <h4><i class="fas fa-flask"></i> Test Phone Numbers</h4>
+                <p style="margin-bottom: 0.5rem;">Use any of these phone numbers to test the payment flow:</p>
+                <div class="credential-item">📱 <span class="credential-label">254708374149</span></div>
+                <div class="credential-item">📱 <span class="credential-label">254712345678</span></div>
+                <div class="credential-item">📱 <span class="credential-label">254700000000</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="margin-top: 3rem;">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GlamByMariga</h4>
+                    <p>Your premier destination for luxury beauty services.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 GlamByMariga. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/mpesa-payment.js"></script>
+
+    <script>
+        /**
+         * Update amount based on selected service
+         */
+        function updateAmount() {
+            const select = document.getElementById('serviceType');
+            const selectedOption = select.options[select.selectedIndex];
+            const price = selectedOption.getAttribute('data-price') || 0;
+
+            const amountInput = document.getElementById('amount');
+            const summaryAmount = document.getElementById('summaryAmount');
+            const totalAmount = document.getElementById('totalAmount');
+
+            amountInput.value = price;
+            summaryAmount.textContent = new Intl.NumberFormat('en-KE', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(price);
+            totalAmount.textContent = new Intl.NumberFormat('en-KE', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(price);
+        }
+
+        /**
+         * Handle payment form submission
+         */
+        async function handlePayment(event) {
+            event.preventDefault();
+
+            const bookingId = document.getElementById('bookingId').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const payBtn = document.getElementById('payBtn');
+
+            // Disable button during processing
+            payBtn.disabled = true;
+
+            // Initiate payment
+            mpesaPaymentHandler.initiateBookingPayment(
+                bookingId,
+                amount,
+                phoneNumber,
+                // Success callback
+                (result) => {
+                    console.log('Payment successful:', result);
+                    payBtn.disabled = false;
+
+                    // Show success screen
+                    showSuccessScreen(result);
+                },
+                // Error callback
+                (error) => {
+                    console.error('Payment error:', error);
+                    payBtn.disabled = false;
+                }
+            );
+        }
+
+        /**
+         * Show success screen
+         */
+        function showSuccessScreen(result) {
+            const form = document.getElementById('paymentForm');
+            form.innerHTML = `
+                <div class="success-screen fade-in">
+                    <div class="icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2 style="color: #28a745; margin-bottom: 1rem;">Payment Successful!</h2>
+                    <p style="color: #666; margin-bottom: 1.5rem; font-size: 1.05rem;">
+                        Your payment has been received and processed.
+                    </p>
+
+                    <div style="background: var(--soft-background); padding: 1.5rem; border-radius: 8px; text-align: left; margin-bottom: 2rem;">
+                        <h4 style="color: var(--rose-gold-dark); margin-bottom: 1rem;">Transaction Details</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #666;">
+                            <span><strong>Transaction ID:</strong></span>
+                            <span>#${result.transaction_id}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #666;">
+                            <span><strong>M-Pesa Receipt:</strong></span>
+                            <span>${result.mpesa_receipt}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #666;">
+                            <span><strong>Amount:</strong></span>
+                            <span>KES ${new Intl.NumberFormat('en-KE').format(result.amount)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; color: #666;">
+                            <span><strong>Status:</strong></span>
+                            <span style="color: #28a745; font-weight: 600;">✓ Completed</span>
+                        </div>
+                    </div>
+
+                    <p style="color: #999; font-size: 0.9rem; margin-bottom: 1.5rem;">
+                        A confirmation email has been sent to your registered email address.
+                    </p>
+
+                    <a href="index.html" class="btn btn-primary">
+                        Back to Home
+                    </a>
+                </div>
+            `;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const amountInput = document.getElementById('amount');
+            if (amountInput.value) {
+                updateAmount();
+            }
+        });
+    </script>
+</body>
+</html>
