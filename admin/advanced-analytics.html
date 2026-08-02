@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Analytics - GlamByMariga Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../public/css/admin.css">
+    <style>
+        :root {
+            --primary-rose: #B76E79;
+            --secondary-gold: #C9A961;
+        }
+
+        .admin-nav {
+            background: linear-gradient(135deg, var(--primary-rose) 0%, #a85a68 100%);
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--secondary-gold);
+            padding-bottom: 15px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--secondary-gold);
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-rose);
+            margin: 10px 0;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <nav class="admin-nav navbar navbar-expand-lg navbar-dark mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="../admin/dashboard.html">
+                    <i class="fas fa-chart-bar"></i> GlamByMariga Analytics
+                </a>
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="../admin/dashboard.html">Dashboard</a>
+                    <a class="nav-link" href="../admin/communications.html">Communications</a>
+                    <a class="nav-link" href="../admin/ai-insights.html">AI Insights</a>
+                    <a class="nav-link active" href="#">Advanced Analytics</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid px-4">
+            <!-- LTV Analytics -->
+            <div class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-money-bill-wave"></i> Customer Lifetime Value Analytics</h2>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div style="font-size: 13px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Avg LTV 12M</div>
+                            <div class="metric-value">KES 12,450</div>
+                            <small style="color: #999;">+23% vs last year</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div style="font-size: 13px; color: #666; text-transform: uppercase; margin-bottom: 8px;">VIP Customers</div>
+                            <div class="metric-value">34</div>
+                            <small style="color: #999;">KES 50k+ value</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div style="font-size: 13px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Growth Opportunities</div>
+                            <div class="metric-value">KES 2.3M</div>
+                            <small style="color: #999;">Total expansion potential</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Value Segment Distribution</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="segmentChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">LTV Tier Breakdown</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm">
+                                    <tr><td><strong>VIP</strong></td><td>34</td><td>45% of value</td></tr>
+                                    <tr><td><strong>Very High</strong></td><td>67</td><td>32% of value</td></tr>
+                                    <tr><td><strong>High</strong></td><td>123</td><td>18% of value</td></tr>
+                                    <tr><td><strong>Medium</strong></td><td>201</td><td>4% of value</td></tr>
+                                    <tr><td><strong>Low</strong></td><td>456</td><td>1% of value</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-5">
+
+            <!-- Cohort Analysis -->
+            <div class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-layer-group"></i> Cohort Analysis</h2>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Cohort Retention Matrix (12 Months)</h5>
+                            </div>
+                            <div class="card-body" style="overflow-x: auto;">
+                                <table class="table table-sm" style="font-size: 12px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Cohort</th><th>M0</th><th>M1</th><th>M2</th><th>M3</th><th>M4</th><th>M5</th><th>M6</th><th>M12</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="background: #e3f2fd;">
+                                            <td><strong>2025-01</strong></td><td>234</td><td>198</td><td>167</td><td>145</td><td>128</td><td>112</td><td>98</td><td>56</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>2025-02</strong></td><td>201</td><td>167</td><td>143</td><td>121</td><td>108</td><td>95</td><td>82</td><td>-</td>
+                                        </tr>
+                                        <tr style="background: #e3f2fd;">
+                                            <td><strong>2025-03</strong></td><td>267</td><td>234</td><td>198</td><td>167</td><td>145</td><td>128</td><td>-</td><td>-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="metric-card">
+                            <div style="font-size: 13px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Month 1 Retention</div>
+                            <div class="metric-value">84.6%</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="metric-card">
+                            <div style="font-size: 13px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Month 6 Retention</div>
+                            <div class="metric-value">62.4%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-5">
+
+            <!-- Attribution Analysis -->
+            <div class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-link"></i> Multi-Touch Attribution</h2>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Channel Attribution (Linear Model)</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="attributionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Channel ROI Analysis</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm">
+                                    <tr><td><strong>Email</strong></td><td>+245%</td><td class="text-success">Best ROI</td></tr>
+                                    <tr><td><strong>Organic</strong></td><td>+180%</td><td></td></tr>
+                                    <tr><td><strong>Social</strong></td><td>+120%</td><td></td></tr>
+                                    <tr><td><strong>Paid</strong></td><td>+85%</td><td></td></tr>
+                                    <tr><td><strong>Direct</strong></td><td>+45%</td><td></td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-5">
+
+            <!-- Customer Journey -->
+            <div class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-route"></i> Customer Journey Analytics</h2>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Journey Stage Conversions</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Transition</th><th>Total</th><th>Converted</th><th>Conversion Rate</th><th>Avg Days</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Awareness → Consideration</strong></td><td>1,245</td><td>1,089</td><td>87.5%</td><td>3.2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Consideration → Decision</strong></td><td>1,089</td><td>687</td><td>63.1%</td><td>12.4</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Decision → Retention</strong></td><td>687</td><td>234</td><td>34.1%</td><td>42.3</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Retention → Advocacy</strong></td><td>234</td><td>56</td><td>23.9%</td><td>78.5</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div style="font-size: 13px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Avg to First Purchase</div>
+                            <div class="metric-value">15.6 days</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div style="font-size: 13px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Avg to Repeat</div>
+                            <div class="metric-value">54.8 days</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div style="font-size: 13px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Conversion Rate</div>
+                            <div class="metric-value">19.2%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        // Segment Distribution Chart
+        const segmentCtx = document.getElementById('segmentChart')?.getContext('2d');
+        if (segmentCtx) {
+            new Chart(segmentCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['VIP', 'Very High', 'High', 'Medium', 'Low'],
+                    datasets: [{
+                        data: [45, 32, 18, 4, 1],
+                        backgroundColor: ['#B76E79', '#C9A961', '#4caf50', '#2196f3', '#9e9e9e']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // Attribution Chart
+        const attrCtx = document.getElementById('attributionChart')?.getContext('2d');
+        if (attrCtx) {
+            new Chart(attrCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Email', 'Organic', 'Social', 'Paid', 'Direct'],
+                    datasets: [{
+                        label: 'Attributed Revenue (KES)',
+                        data: [2450000, 1800000, 1200000, 850000, 450000],
+                        backgroundColor: '#C9A961'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y' }
+            });
+        }
+    </script>
+</body>
+</html>
