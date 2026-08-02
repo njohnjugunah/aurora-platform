@@ -57,7 +57,20 @@
       "Bash(git commit -m 'fix: cast preg_match return value to bool in PaymentValidator *)",
       "Bash(git commit -m 'fix: correct test data key to match PaymentValidator expectation *)",
       "Bash(git commit -m 'fix: correct InventoryValidatorTest to match validator API *)",
-      "Bash(git commit -m 'fix: resolve API/interface mismatches and standardize response format *)"
+      "Bash(git commit -m 'fix: resolve API/interface mismatches and standardize response format *)",
+      "PowerShell(node --version)",
+      "PowerShell(Get-Process node -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Force)",
+      "Bash(git commit -m 'docs: create Phase 2 Sprint 2 execution plan *)",
+      "Bash(node mock-api-server.js)",
+      "Bash(git commit *)",
+      "Bash(php vendor/bin/phpunit tests/ --testdox)",
+      "Bash(git commit -m 'fix: start fixing backend PHPUnit test failures *)",
+      "Bash(git commit -m 'fix: complete bulk fix of all remaining controller tests *)",
+      "Bash(php vendor/bin/phpunit tests/Unit/Controllers/AuthControllerTest.php)",
+      "PowerShell($env:PATH -split ';' | Where-Object { Test-Path $_ } | Get-ChildItem -Filter 'php.exe' -ErrorAction SilentlyContinue)",
+      "PowerShell(docker --version 2>&1)",
+      "PowerShell(head -1)"
     ]
   }
 }

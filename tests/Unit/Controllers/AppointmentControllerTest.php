@@ -221,7 +221,7 @@ class AppointmentControllerTest extends TestCase
             'limit' => 500, // More than max of 100
         ];
 
-        $this->appointmentRepository->method('findFiltered')->with(
+        $this->appointmentRepository->method('findPaginated')->with(
             $this->anything(),
             $this->anything(),
             $this->anything(),

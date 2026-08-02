@@ -173,7 +173,7 @@ class CustomerControllerTest extends TestCase
             'limit' => 500, // More than max
         ];
 
-        $this->customerRepository->method('findFiltered')->willReturn(['data' => [], 'total' => 0]);
+        $this->customerRepository->method('findPaginated')->willReturn(['data' => [], 'total' => 0]);
 
         $result = $this->controller->list($query);
 

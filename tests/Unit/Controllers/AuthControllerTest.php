@@ -38,7 +38,7 @@ class AuthControllerTest extends TestCase
     {
         $request = ['email' => 'user@example.com', 'password' => 'password123'];
 
-        $this->loginValidator->method('validate')->willReturn(true);
+        $this->loginValidator->method('validate');
         $this->authService->method('authenticate')->willReturn([
             'user' => ['id' => 1, 'email' => 'user@example.com'],
             'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
@@ -54,7 +54,7 @@ class AuthControllerTest extends TestCase
     {
         $request = ['email' => 'user@example.com', 'password' => 'wrongpassword'];
 
-        $this->loginValidator->method('validate')->willReturn(true);
+        $this->loginValidator->method('validate');
         $this->authService->method('authenticate')->willThrowException(new \Exception('Invalid credentials'));
 
         $result = $this->controller->login($request);
