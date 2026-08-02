@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Insights - GlamByMariga Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../public/css/admin.css">
+    <style>
+        :root {
+            --primary-rose: #B76E79;
+            --secondary-gold: #C9A961;
+            --light-bg: #fefdfb;
+        }
+
+        .admin-nav {
+            background: linear-gradient(135deg, var(--primary-rose) 0%, #a85a68 100%);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .admin-nav a {
+            color: white !important;
+            padding: 12px 20px !important;
+            font-weight: 500;
+        }
+
+        .admin-nav a.active {
+            background-color: rgba(255,255,255,0.2);
+            border-bottom: 3px solid var(--secondary-gold);
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--secondary-gold);
+            padding-bottom: 15px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--secondary-gold);
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-rose);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .insight-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--primary-rose);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .insight-title {
+            font-weight: 600;
+            color: var(--primary-rose);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .insight-description {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .btn-action {
+            padding: 6px 12px;
+            font-size: 13px;
+            border-radius: 4px;
+        }
+
+        .lifecycle-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .badge-prospect {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-new {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .badge-active {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .badge-at-risk {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .badge-inactive {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .badge-loyal {
+            background: #c9a961;
+            color: white;
+        }
+
+        .badge-vip {
+            background: #b76e79;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Navigation -->
+        <nav class="admin-nav navbar navbar-expand-lg navbar-dark mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="../admin/dashboard.html">
+                    <i class="fas fa-heart"></i> GlamByMariga Admin
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="navbar-nav ms-auto">
+                        <a class="nav-link" href="../admin/dashboard.html">Dashboard</a>
+                        <a class="nav-link" href="../admin/communications.html">Communications</a>
+                        <a class="nav-link active" href="#">AI Insights</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container-fluid px-4">
+            <!-- Section: Churn Prediction -->
+            <div class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Churn Prediction & Prevention</h2>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="metric-card">
+                            <div class="metric-label">Avg Churn Risk</div>
+                            <div class="metric-value" id="avg-churn-risk">0%</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="metric-card">
+                            <div class="metric-label">High Risk (70+)</div>
+                            <div class="metric-value" id="high-risk-count">0</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="metric-card">
+                            <div class="metric-label">Interventions Sent</div>
+                            <div class="metric-value" id="interventions-sent">0</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="metric-card">
+                            <div class="metric-label">Customers Retained</div>
+                            <div class="metric-value" id="retained-count">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <button class="btn btn-primary" onclick="loadHighRiskCustomers()">
+                            <i class="fas fa-exclamation-circle"></i> Load At-Risk Customers
+                        </button>
+                        <button class="btn btn-secondary" onclick="calculateAllChurn()">
+                            <i class="fas fa-calculator"></i> Recalculate All
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <h5 class="mb-3">High Risk Customers (70+ Risk Score)</h5>
+                        <div id="high-risk-list" class="row">
+                            <div class="col-12 text-center text-muted py-4">Click "Load At-Risk Customers" to view</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-5">
+
+            <!-- Section: Customer Lifecycle -->
+            <div class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> Customer Lifecycle Intelligence</h2>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-lg-4">
+                        <h5 class="mb-3">Stage Distribution</h5>
+                        <div id="lifecycle-distribution">
+                            <div class="text-muted">Loading...</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <h5 class="mb-3">Stage Health Metrics</h5>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Stage</th>
+                                        <th>Count</th>
+                                        <th>Avg Engagement</th>
+                                        <th>Avg Churn Risk</th>
+                                        <th>At Risk</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="health-metrics">
+                                    <tr><td colspan="5" class="text-center text-muted">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn btn-primary" onclick="calculateAllLifecycles()">
+                            <i class="fas fa-sync"></i> Recalculate All Stages
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-5">
+
+            <!-- Section: Send-Time Optimization -->
+            <div class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-clock"></i> Predictive Send-Time Optimization</h2>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="metric-card">
+                            <div class="metric-label">Avg Prediction Accuracy</div>
+                            <div class="metric-value" id="prediction-accuracy">0%</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="metric-card">
+                            <div class="metric-label">Predictions Made</div>
+                            <div class="metric-value" id="predictions-made">0</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Top Performing Subject Lines</h5>
+                        <div id="top-subjects" style="font-size: 13px; line-height: 1.8;">
+                            <div class="text-muted">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-5">
+
+            <!-- Section: Subject Line Intelligence -->
+            <div class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-lightbulb"></i> AI-Powered Subject Lines</h2>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Generate Variants</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Original Subject</label>
+                                    <input type="text" class="form-control" id="subject-input"
+                                           placeholder="Enter your subject line...">
+                                </div>
+                                <button class="btn btn-primary" onclick="generateVariants()">
+                                    <i class="fas fa-wand-magic-sparkles"></i> Generate Variants
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">CTA Recommendations</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Campaign Type</label>
+                                    <select class="form-select" id="campaign-type-select">
+                                        <option value="promotional">Promotional</option>
+                                        <option value="educational">Educational</option>
+                                        <option value="win_back">Win-Back</option>
+                                        <option value="reorder">Reorder</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-secondary" onclick="getCTARecommendations()">
+                                    <i class="fas fa-bullseye"></i> Get CTA Ideas
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="variants-result" style="display: none;">
+                    <h5 class="mb-3">Generated Variants</h5>
+                    <div id="variants-list" class="row"></div>
+                </div>
+
+                <div id="cta-result" style="display: none;">
+                    <h5 class="mb-3">Recommended CTAs</h5>
+                    <div id="cta-list" class="row mb-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadChurnAnalytics();
+            loadLifecycleData();
+            loadPredictiveMetrics();
+        });
+
+        // Load churn analytics
+        async function loadChurnAnalytics() {
+            try {
+                const response = await fetch('/ajax/communication/churn.php?action=analytics');
+                const data = await response.json();
+                if (data.success && data.analytics) {
+                    document.getElementById('avg-churn-risk').textContent =
+                        Math.round(data.analytics.avg_risk_score || 0) + '%';
+                    document.getElementById('high-risk-count').textContent =
+                        data.analytics.high_risk_count || 0;
+                    document.getElementById('interventions-sent').textContent =
+                        data.analytics.interventions_sent || 0;
+                    document.getElementById('retained-count').textContent =
+                        data.analytics.customers_retained || 0;
+                }
+            } catch (error) {
+                console.error('Load churn error:', error);
+            }
+        }
+
+        // Load high risk customers
+        async function loadHighRiskCustomers() {
+            try {
+                const response = await fetch('/ajax/communication/churn.php?action=high_risk&limit=20');
+                const data = await response.json();
+                const list = document.getElementById('high-risk-list');
+                list.innerHTML = '';
+
+                if (data.success && data.customers) {
+                    data.customers.forEach(customer => {
+                        const col = document.createElement('div');
+                        col.className = 'col-md-6 mb-3';
+                        col.innerHTML = `
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">${customer.name}</h6>
+                                    <p class="mb-2" style="font-size: 13px;">
+                                        Risk Score: <strong>${customer.churn_risk_score}%</strong>
+                                    </p>
+                                    <p class="mb-2" style="font-size: 13px;">
+                                        Primary Risk: ${customer.primary_risk_factor}
+                                    </p>
+                                    <button class="btn btn-sm btn-primary"
+                                            onclick="alert('Send intervention campaign for ${customer.name}')">
+                                        Send Intervention
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        list.appendChild(col);
+                    });
+                }
+            } catch (error) {
+                console.error('Load high risk error:', error);
+            }
+        }
+
+        // Calculate all churn
+        async function calculateAllChurn() {
+            try {
+                const response = await fetch('/ajax/communication/churn.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'calculate_batch' })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert(`Calculated churn for ${data.calculated} customers`);
+                    loadChurnAnalytics();
+                }
+            } catch (error) {
+                console.error('Calculate error:', error);
+            }
+        }
+
+        // Load lifecycle data
+        async function loadLifecycleData() {
+            try {
+                const response = await fetch('/ajax/communication/lifecycle.php?action=distribution');
+                const data = await response.json();
+                const dist = document.getElementById('lifecycle-distribution');
+                dist.innerHTML = '';
+
+                if (data.success && data.distribution) {
+                    data.distribution.forEach(stage => {
+                        const badge = document.createElement('div');
+                        badge.className = `lifecycle-badge badge-${stage.current_stage}`;
+                        badge.textContent = `${stage.current_stage}: ${stage.count}`;
+                        dist.appendChild(badge);
+                    });
+                }
+            } catch (error) {
+                console.error('Load lifecycle error:', error);
+            }
+
+            // Load health metrics
+            try {
+                const response = await fetch('/ajax/communication/lifecycle.php?action=health_metrics');
+                const data = await response.json();
+                const tbody = document.getElementById('health-metrics');
+                tbody.innerHTML = '';
+
+                if (data.success && data.metrics) {
+                    data.metrics.forEach(metric => {
+                        const row = `
+                            <tr>
+                                <td><strong>${metric.current_stage}</strong></td>
+                                <td>${metric.stage_size}</td>
+                                <td>${Math.round(metric.avg_engagement || 0)}%</td>
+                                <td>${Math.round(metric.avg_churn_risk || 0)}%</td>
+                                <td>${metric.at_risk_count || 0}</td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+                }
+            } catch (error) {
+                console.error('Load health metrics error:', error);
+            }
+        }
+
+        // Calculate all lifecycles
+        async function calculateAllLifecycles() {
+            try {
+                const response = await fetch('/ajax/communication/lifecycle.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'calculate_all' })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert(`Calculated lifecycle stages for ${data.calculated} customers`);
+                    loadLifecycleData();
+                }
+            } catch (error) {
+                console.error('Calculate lifecycle error:', error);
+            }
+        }
+
+        // Load predictive metrics
+        async function loadPredictiveMetrics() {
+            try {
+                const response = await fetch('/ajax/communication/predictive.php?action=dashboard');
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('prediction-accuracy').textContent =
+                        Math.round(data.prediction_accuracy || 0) + '%';
+                    document.getElementById('predictions-made').textContent =
+                        data.predictions_made || 0;
+
+                    // Show top subject lines
+                    const subjectsDiv = document.getElementById('top-subjects');
+                    subjectsDiv.innerHTML = '';
+                    if (data.top_subject_lines) {
+                        data.top_subject_lines.slice(0, 3).forEach(subject => {
+                            const line = document.createElement('div');
+                            line.className = 'mb-2';
+                            line.innerHTML = `
+                                <strong>${subject.subject_line}</strong><br>
+                                <small class="text-muted">Open: ${subject.open_rate}% | Click: ${subject.click_rate}%</small>
+                            `;
+                            subjectsDiv.appendChild(line);
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Load predictive error:', error);
+            }
+        }
+
+        // Generate subject line variants
+        async function generateVariants() {
+            const subject = document.getElementById('subject-input').value;
+            if (!subject) {
+                alert('Please enter a subject line');
+                return;
+            }
+
+            try {
+                const response = await fetch('/ajax/communication/predictive.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'generate_subject_lines', subject })
+                });
+                const data = await response.json();
+
+                if (data.success && data.variants) {
+                    const resultDiv = document.getElementById('variants-result');
+                    const listDiv = document.getElementById('variants-list');
+                    listDiv.innerHTML = '';
+
+                    data.variants.forEach((variant, idx) => {
+                        const col = document.createElement('div');
+                        col.className = 'col-md-6 mb-3';
+                        col.innerHTML = `
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">${variant.type.toUpperCase()}</h6>
+                                    <p class="mb-2"><strong>${variant.subject}</strong></p>
+                                    <p class="mb-2" style="font-size: 12px; color: #666;">
+                                        ${variant.pattern}
+                                    </p>
+                                    <small class="text-muted">
+                                        Predicted Open Rate: ${variant.predicted_open_rate}%
+                                    </small>
+                                </div>
+                            </div>
+                        `;
+                        listDiv.appendChild(col);
+                    });
+                    resultDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Generate variants error:', error);
+            }
+        }
+
+        // Get CTA recommendations
+        async function getCTARecommendations() {
+            const type = document.getElementById('campaign-type-select').value;
+
+            try {
+                const response = await fetch('/ajax/communication/predictive.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'cta_recommendations', campaign_type: type })
+                });
+                const data = await response.json();
+
+                if (data.success && data.recommendations) {
+                    const resultDiv = document.getElementById('cta-result');
+                    const listDiv = document.getElementById('cta-list');
+                    listDiv.innerHTML = '';
+
+                    data.recommendations.forEach(cta => {
+                        const col = document.createElement('div');
+                        col.className = 'col-md-6 mb-2';
+                        col.innerHTML = `
+                            <div class="alert alert-info mb-0">
+                                <strong>${cta}</strong>
+                                <button class="btn btn-sm btn-link float-end" onclick="alert('Selected: ${cta}')">
+                                    Use This
+                                </button>
+                            </div>
+                        `;
+                        listDiv.appendChild(col);
+                    });
+                    resultDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Get CTA error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
