@@ -1,0 +1,723 @@
+/**
+ * Mobile Responsiveness Stylesheet
+ * Optimizes Aurora Platform for tablets and mobile devices
+ */
+
+/* ============================================================================
+   TABLET LAYOUT (768px - 1023px)
+   ============================================================================ */
+
+@media (max-width: 1023px) {
+    /* Sidebar adjustments */
+    .sidebar {
+        width: 180px;
+        padding: 15px 0;
+    }
+
+    .sidebar .nav-link {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .sidebar .nav-link i {
+        width: 18px;
+    }
+
+    .navbar-brand {
+        font-size: 1.2rem;
+        padding: 0 15px;
+        margin-bottom: 15px;
+    }
+
+    .content {
+        padding: 20px;
+    }
+
+    .top-navbar {
+        padding: 12px 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .top-navbar h2 {
+        font-size: 1.3rem;
+    }
+
+    /* Card adjustments */
+    .card {
+        margin-bottom: 15px;
+    }
+
+    .card-body {
+        padding: 12px;
+    }
+
+    /* Table adjustments */
+    .table {
+        font-size: 0.9rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 8px;
+    }
+
+    /* Button adjustments */
+    .btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-sm {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    /* Form adjustments */
+    .form-control,
+    .form-select {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+
+    /* Badge adjustments */
+    .badge {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+    }
+}
+
+/* ============================================================================
+   MOBILE LAYOUT (576px - 767px)
+   ============================================================================ */
+
+@media (max-width: 767px) {
+    .d-flex {
+        flex-direction: column !important;
+    }
+
+    /* Hide sidebar, use mobile nav */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        height: 100vh;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        background: #2c3e50;
+        overflow-y: auto;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    .col-md-10,
+    .col-md-8,
+    .col-md-6,
+    .col-md-4,
+    .col-md-3,
+    .col-md-2 {
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+
+    /* Mobile header */
+    .top-navbar {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .top-navbar h2 {
+        font-size: 1.1rem;
+        width: 100%;
+        margin: 0;
+    }
+
+    .user-menu {
+        gap: 10px;
+        width: 100%;
+    }
+
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    #user-name {
+        font-size: 0.9rem;
+    }
+
+    /* Mobile hamburger menu */
+    .mobile-menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        color: #2c3e50;
+        cursor: pointer;
+        font-size: 1.5rem;
+        padding: 0;
+        margin-right: 10px;
+    }
+
+    /* Content adjustments */
+    .content {
+        padding: 12px;
+        margin-top: 0;
+    }
+
+    /* Page title adjustments */
+    .page-title {
+        margin-bottom: 15px;
+    }
+
+    .page-title h1 {
+        font-size: 1.3rem;
+        margin-bottom: 5px;
+    }
+
+    .page-title small {
+        font-size: 0.8rem;
+    }
+
+    /* Card adjustments */
+    .card {
+        margin-bottom: 12px;
+        border-radius: 6px;
+    }
+
+    .card-header {
+        padding: 10px;
+    }
+
+    .card-header h5 {
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+    .card-footer {
+        padding: 10px;
+    }
+
+    /* Row and column adjustments */
+    .row {
+        margin-right: -6px;
+        margin-left: -6px;
+    }
+
+    .row > [class*="col-"] {
+        padding-right: 6px;
+        padding-left: 6px;
+    }
+
+    /* Form adjustments */
+    .form-group,
+    .mb-3 {
+        margin-bottom: 10px !important;
+    }
+
+    .form-label {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+
+    .form-control,
+    .form-select {
+        font-size: 1rem;
+        padding: 0.6rem 0.5rem;
+        min-height: 44px; /* Touch-friendly size */
+    }
+
+    .form-check {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-check-input {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    /* Button adjustments */
+    .btn {
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+        min-height: 44px; /* Touch-friendly size */
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-sm {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+        min-height: 40px;
+    }
+
+    .btn-group {
+        gap: 5px;
+    }
+
+    .btn-group .btn {
+        flex: 1;
+        margin: 0 !important;
+    }
+
+    .btn-group-vertical {
+        gap: 5px;
+    }
+
+    .btn-group-vertical .btn {
+        width: 100%;
+    }
+
+    /* Table responsiveness */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table {
+        font-size: 0.85rem;
+        margin-bottom: 0;
+    }
+
+    .table th,
+    .table td {
+        padding: 6px 4px;
+        word-break: break-word;
+    }
+
+    .table thead {
+        font-size: 0.75rem;
+    }
+
+    /* Hide less important columns on mobile */
+    .table .d-none-mobile {
+        display: none !important;
+    }
+
+    /* Badge adjustments */
+    .badge {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.5rem;
+    }
+
+    /* Modal adjustments */
+    .modal-dialog {
+        margin: 10px;
+    }
+
+    .modal-content {
+        border-radius: 8px;
+    }
+
+    .modal-header {
+        padding: 12px;
+    }
+
+    .modal-header .btn-close {
+        width: 24px;
+        height: 24px;
+    }
+
+    .modal-title {
+        font-size: 1.1rem;
+    }
+
+    .modal-body {
+        padding: 12px;
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+
+    .modal-footer {
+        padding: 10px;
+        gap: 5px;
+    }
+
+    /* Alert adjustments */
+    .alert {
+        padding: 10px;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .alert i {
+        margin-right: 8px;
+    }
+
+    /* Pagination adjustments */
+    .pagination {
+        margin: 10px 0;
+    }
+
+    .page-link {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.85rem;
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Tab adjustments */
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .nav-tabs .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        border: none;
+        border-bottom: 3px solid transparent;
+    }
+
+    .nav-tabs .nav-link.active {
+        border-bottom-color: #3498db;
+        background: none;
+    }
+
+    /* Grid adjustments for services/products */
+    [style*="grid-template-columns"] {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)) !important;
+    }
+
+    /* Reduce gaps */
+    .gap-2 {
+        gap: 8px !important;
+    }
+
+    .gap-3 {
+        gap: 10px !important;
+    }
+
+    /* Sidebar navigation menu */
+    .sidebar .nav {
+        flex-direction: column;
+    }
+
+    .sidebar .nav-link {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
+
+    .sidebar .navbar-brand {
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    /* Chart placeholders */
+    .chart-placeholder {
+        min-height: 200px;
+    }
+
+    /* Dropdown adjustments */
+    .dropdown-menu {
+        min-width: auto;
+        width: calc(100% - 20px);
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+    }
+
+    /* Reduce icon sizes for touch */
+    .nav-link i {
+        font-size: 1.1rem;
+    }
+
+    /* Input group adjustments */
+    .input-group {
+        gap: 5px;
+    }
+
+    .input-group > .form-control,
+    .input-group > .form-select {
+        min-height: 44px;
+    }
+}
+
+/* ============================================================================
+   SMALL MOBILE (320px - 575px)
+   ============================================================================ */
+
+@media (max-width: 575px) {
+    body {
+        font-size: 14px;
+    }
+
+    .top-navbar {
+        padding: 8px 10px;
+        gap: 5px;
+    }
+
+    .top-navbar h2 {
+        font-size: 1rem;
+    }
+
+    .user-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+
+    #user-name {
+        display: none;
+    }
+
+    .content {
+        padding: 10px;
+    }
+
+    .page-title h1 {
+        font-size: 1.2rem;
+    }
+
+    .page-title small {
+        display: block;
+        font-size: 0.75rem;
+        margin-top: 5px;
+    }
+
+    .card {
+        margin-bottom: 10px;
+    }
+
+    .card-body {
+        padding: 8px;
+    }
+
+    .btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+        min-height: 40px;
+    }
+
+    .btn i {
+        margin-right: 5px;
+    }
+
+    .btn-sm {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+        min-height: 36px;
+    }
+
+    /* Form adjustments */
+    .form-control,
+    .form-select {
+        font-size: 16px; /* Prevent zoom on iOS */
+        padding: 0.5rem 0.4rem;
+        min-height: 44px;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+    }
+
+    /* Modal adjustments */
+    .modal-dialog {
+        margin: 5px;
+    }
+
+    .modal-body {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .modal-footer {
+        padding: 8px;
+    }
+
+    .modal-footer .btn {
+        flex: 1;
+        font-size: 0.85rem;
+    }
+
+    /* Table adjustments */
+    .table {
+        font-size: 0.8rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 4px 2px;
+    }
+
+    /* Actions column on mobile */
+    .btn-sm.btn-primary,
+    .btn-sm.btn-danger,
+    .btn-sm.btn-info {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    /* Sidebar adjustments */
+    .sidebar {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .navbar-brand {
+        font-size: 0.9rem;
+    }
+
+    /* Alert text size */
+    .alert {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    /* Pagination adjustments */
+    .page-link {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.8rem;
+        min-height: 32px;
+    }
+
+    /* Hide text labels, show icons only */
+    .sidebar .nav-link span {
+        display: none;
+    }
+
+    .sidebar .nav-link {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .sidebar .nav-link i {
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    /* Text truncation */
+    .text-truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Reduce progress bar height */
+    .progress {
+        height: 4px;
+    }
+
+    /* Badge size reduction */
+    .badge {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.4rem;
+    }
+}
+
+/* ============================================================================
+   LANDSCAPE MOBILE (576px - 1024px height)
+   ============================================================================ */
+
+@media (max-height: 600px) and (orientation: landscape) {
+    .top-navbar {
+        padding: 8px 12px;
+    }
+
+    .page-title {
+        margin-bottom: 8px;
+    }
+
+    .page-title h1 {
+        font-size: 1.1rem;
+        margin-bottom: 2px;
+    }
+
+    .card-body {
+        padding: 8px;
+    }
+
+    .content {
+        padding: 10px;
+    }
+}
+
+/* ============================================================================
+   UTILITY CLASSES FOR MOBILE
+   ============================================================================ */
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #2c3e50;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.hide-mobile {
+    display: block;
+}
+
+.show-mobile {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .hide-mobile {
+        display: none !important;
+    }
+
+    .show-mobile {
+        display: block !important;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+}
+
+/* Touch-friendly spacing */
+@media (max-width: 767px) {
+    button,
+    a,
+    input[type="button"],
+    input[type="submit"],
+    input[type="checkbox"],
+    input[type="radio"] {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    /* Increase clickable area for checkboxes */
+    .form-check-input {
+        cursor: pointer;
+    }
+
+    .form-check {
+        cursor: pointer;
+    }
+}
+
+/* Responsive typography */
+@media (max-width: 767px) {
+    h1 { font-size: 1.5rem !important; }
+    h2 { font-size: 1.3rem !important; }
+    h3 { font-size: 1.1rem !important; }
+    h4 { font-size: 1rem !important; }
+    h5 { font-size: 0.95rem !important; }
+    h6 { font-size: 0.9rem !important; }
+}
+
+/* Viewport meta tag should be: <meta name="viewport" content="width=device-width, initial-scale=1.0"> */
