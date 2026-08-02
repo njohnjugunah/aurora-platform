@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - GlamByMariga</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.10/index.global.min.css" rel="stylesheet">
+    <link href="css/glambymariga-theme.css" rel="stylesheet">
+    <link href="css/luxury-components.css" rel="stylesheet">
+    <link href="css/animations.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .booking-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .booking-panel h3 {
+            color: var(--rose-gold-dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .form-group-booking {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group-booking label {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group-booking input,
+        .form-group-booking select,
+        .form-group-booking textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .form-group-booking input:focus,
+        .form-group-booking select:focus,
+        .form-group-booking textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.1);
+        }
+
+        .calendar-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calendar-panel h3 {
+            color: var(--rose-gold-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .selected-date-time {
+            background: var(--soft-background);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .selected-date-time strong {
+            display: block;
+            color: var(--rose-gold-dark);
+            font-size: 1.1rem;
+        }
+
+        .selected-date-time .time {
+            display: block;
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            margin-top: 0.5rem;
+        }
+
+        .slots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .slot-btn {
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--gray-dark);
+        }
+
+        .slot-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .slot-btn.selected {
+            background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold));
+            color: white;
+            border-color: var(--accent-gold);
+        }
+
+        .slot-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .no-slots {
+            text-align: center;
+            padding: 1rem;
+            color: #999;
+        }
+
+        .booking-summary {
+            background: var(--soft-background);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            color: var(--gray-medium);
+        }
+
+        .summary-row.total {
+            border-top: 1px solid #ddd;
+            padding-top: 0.75rem;
+            font-weight: 600;
+            color: var(--rose-gold-dark);
+            font-size: 1.1rem;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(183, 110, 121, 0.3);
+        }
+
+        .book-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .service-option {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .service-option:hover {
+            border-color: var(--accent-gold);
+            background: #fafafa;
+        }
+
+        .service-option.selected {
+            border-color: var(--accent-gold);
+            background: rgba(201, 169, 97, 0.1);
+        }
+
+        .service-name {
+            font-weight: 600;
+            color: var(--rose-gold-dark);
+        }
+
+        .service-price {
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        .service-duration {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .calendar-month-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-month-nav button {
+            background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold));
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .calendar-month-nav h4 {
+            color: var(--rose-gold-dark);
+            margin: 0;
+        }
+
+        .simple-calendar {
+            width: 100%;
+        }
+
+        .calendar-day {
+            padding: 0.75rem;
+            text-align: center;
+            border: 1px solid #eee;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-day:hover {
+            background: rgba(201, 169, 97, 0.1);
+            border-color: var(--accent-gold);
+        }
+
+        .calendar-day.selected {
+            background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold));
+            color: white;
+            font-weight: 600;
+        }
+
+        .calendar-day.unavailable {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f5f5f5;
+        }
+
+        .calendar-day.other-month {
+            color: #ccc;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="nav-brand"><i class="fas fa-sparkles"></i> GlamByMariga</a>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item"><a href="about.html">About</a></li>
+                    <li class="nav-item"><a href="index.html#services">Services</a></li>
+                    <li class="nav-item"><a href="gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-banner" style="height: 50vh; min-height: 350px;">
+        <div class="hero-content fade-in">
+            <h1>Book Your Appointment</h1>
+            <p class="hero-subtitle fade-in" style="animation-delay: 0.2s;">Choose your perfect time at GlamByMariga</p>
+        </div>
+    </section>
+
+    <!-- Booking Content -->
+    <div class="container fade-in">
+        <div class="booking-container">
+            <!-- Left Panel: Form -->
+            <div class="booking-panel">
+                <h3><i class="fas fa-edit" style="margin-right: 0.5rem;"></i>Your Details</h3>
+
+                <form id="bookingForm">
+                    <!-- Service Selection -->
+                    <div class="form-group-booking">
+                        <label for="serviceSelect">
+                            <i class="fas fa-spa" style="color: var(--accent-gold); margin-right: 0.3rem;"></i>
+                            Select Service
+                        </label>
+                        <select id="serviceSelect" required onchange="updateServiceInfo()">
+                            <option value="">-- Choose a service --</option>
+                            <option value="1">Classic Lash Extensions - KES 3,500</option>
+                            <option value="2">Volume Lash Extensions - KES 5,000</option>
+                            <option value="3">Mega Volume Lashes - KES 7,500</option>
+                            <option value="4">Hair Installation - KES 5,000</option>
+                            <option value="5">Hair Cut & Style - KES 2,500</option>
+                            <option value="6">Beauty Facial - KES 2,500</option>
+                            <option value="7">Professional Makeup - KES 3,000</option>
+                        </select>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="form-group-booking">
+                        <label for="customerName">
+                            <i class="fas fa-user" style="color: var(--accent-gold); margin-right: 0.3rem;"></i>
+                            Full Name
+                        </label>
+                        <input type="text" id="customerName" required placeholder="Your full name">
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group-booking">
+                        <label for="customerEmail">
+                            <i class="fas fa-envelope" style="color: var(--accent-gold); margin-right: 0.3rem;"></i>
+                            Email Address
+                        </label>
+                        <input type="email" id="customerEmail" required placeholder="your.email@example.com">
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="form-group-booking">
+                        <label for="customerPhone">
+                            <i class="fas fa-phone" style="color: var(--accent-gold); margin-right: 0.3rem;"></i>
+                            Phone Number
+                        </label>
+                        <input type="tel" id="customerPhone" required placeholder="254712345678">
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="form-group-booking">
+                        <label for="notes">
+                            <i class="fas fa-sticky-note" style="color: var(--accent-gold); margin-right: 0.3rem;"></i>
+                            Special Requests (Optional)
+                        </label>
+                        <textarea id="notes" rows="3" placeholder="Any special requests or notes for the stylist..."></textarea>
+                    </div>
+
+                    <!-- Service Summary -->
+                    <div class="booking-summary" id="serviceSummary" style="display: none;">
+                        <div class="summary-row">
+                            <span>Service:</span>
+                            <span id="summaryService">-</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Date & Time:</span>
+                            <span id="summaryDateTime">-</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="summaryPrice">KES 0.00</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="book-btn" id="bookBtn" disabled>
+                        <i class="fas fa-calendar-check" style="margin-right: 0.5rem;"></i>
+                        Complete Booking
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Panel: Calendar -->
+            <div class="booking-panel">
+                <h3><i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>Select Date & Time</h3>
+
+                <!-- Date Selection -->
+                <div class="form-group-booking">
+                    <label>
+                        <i class="fas fa-calendar" style="color: var(--accent-gold); margin-right: 0.3rem;"></i>
+                        Select Date
+                    </label>
+                    <input type="date" id="dateInput" required onchange="loadSlots()">
+                </div>
+
+                <!-- Selected Date Display -->
+                <div class="selected-date-time" id="selectedDateTime" style="display: none;">
+                    <strong id="selectedDate">-</strong>
+                    <span class="time" id="selectedTime">-</span>
+                </div>
+
+                <!-- Available Slots -->
+                <div id="slotsContainer">
+                    <p class="no-slots">Select a date to see available times</p>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div id="loadingSlots" style="display: none; text-align: center; padding: 1rem;">
+                    <div class="spinner-border text-warning" role="status" style="width: 30px; height: 30px;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p style="margin-top: 0.5rem; color: #999;">Finding available times...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="margin-top: 3rem;">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GlamByMariga</h4>
+                    <p>Your premier destination for luxury beauty services.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Hours</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>Mon-Sat: 8AM-8PM</li>
+                        <li>Sunday: Closed</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="tel:+254712345678">+254 712 345 678</a></li>
+                        <li><a href="mailto:info@glambymariga.com">info@glambymariga.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 GlamByMariga. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/mpesa-payment.js"></script>
+
+    <script>
+        // Service pricing data
+        const services = {
+            1: { name: 'Classic Lash Extensions', price: 3500, duration: 120 },
+            2: { name: 'Volume Lash Extensions', price: 5000, duration: 150 },
+            3: { name: 'Mega Volume Lashes', price: 7500, duration: 180 },
+            4: { name: 'Hair Installation', price: 5000, duration: 180 },
+            5: { name: 'Hair Cut & Style', price: 2500, duration: 60 },
+            6: { name: 'Beauty Facial', price: 2500, duration: 60 },
+            7: { name: 'Professional Makeup', price: 3000, duration: 60 }
+        };
+
+        let selectedService = null;
+        let selectedDate = null;
+        let selectedTime = null;
+
+        /**
+         * Update service information
+         */
+        function updateServiceInfo() {
+            const serviceId = document.getElementById('serviceSelect').value;
+            selectedService = serviceId ? services[serviceId] : null;
+
+            if (selectedService) {
+                updateSummary();
+            }
+
+            // Reset slots when service changes
+            document.getElementById('slotsContainer').innerHTML = '<p class="no-slots">Select a date to see available times</p>';
+        }
+
+        /**
+         * Load available slots for selected date
+         */
+        async function loadSlots() {
+            if (!selectedService) {
+                alert('Please select a service first');
+                return;
+            }
+
+            selectedDate = document.getElementById('dateInput').value;
+            if (!selectedDate) return;
+
+            const loadingDiv = document.getElementById('loadingSlots');
+            const slotsContainer = document.getElementById('slotsContainer');
+
+            loadingDiv.style.display = 'block';
+            slotsContainer.innerHTML = '';
+
+            try {
+                const response = await fetch(`/ajax/bookings/get-slots.php?service_id=${selectedService.id}&date=${selectedDate}`);
+                const result = await response.json();
+
+                loadingDiv.style.display = 'none';
+
+                if (!result.success || !result.data.slots || result.data.slots.length === 0) {
+                    slotsContainer.innerHTML = '<p class="no-slots">No available times for this date. Please choose another date.</p>';
+                    return;
+                }
+
+                // Display slots
+                let slotsHtml = '<div class="slots-grid">';
+                result.data.slots.forEach(slot => {
+                    slotsHtml += `
+                        <button type="button" class="slot-btn" onclick="selectSlot('${slot.time}')">
+                            ${slot.time}
+                        </button>
+                    `;
+                });
+                slotsHtml += '</div>';
+
+                slotsContainer.innerHTML = slotsHtml;
+
+            } catch (error) {
+                loadingDiv.style.display = 'none';
+                console.error('Slots fetch error:', error);
+                slotsContainer.innerHTML = '<p class="no-slots" style="color: #d32f2f;">Error loading available times. Please try again.</p>';
+            }
+        }
+
+        /**
+         * Select time slot
+         */
+        function selectSlot(time) {
+            // Update UI
+            document.querySelectorAll('.slot-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
+
+            selectedTime = time;
+
+            // Show selected date time
+            const dateObj = new Date(selectedDate + 'T00:00:00');
+            const dateStr = dateObj.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            document.getElementById('selectedDateTime').style.display = 'block';
+            document.getElementById('selectedDate').textContent = dateStr;
+            document.getElementById('selectedTime').textContent = time;
+
+            // Enable book button
+            document.getElementById('bookBtn').disabled = false;
+
+            updateSummary();
+        }
+
+        /**
+         * Update booking summary
+         */
+        function updateSummary() {
+            if (!selectedService) return;
+
+            const summaryDiv = document.getElementById('serviceSummary');
+            if (selectedDate && selectedTime) {
+                document.getElementById('summaryService').textContent = selectedService.name;
+                document.getElementById('summaryDateTime').textContent = `${selectedDate} at ${selectedTime}`;
+                document.getElementById('summaryPrice').textContent = `KES ${new Intl.NumberFormat('en-KE').format(selectedService.price)}`;
+                summaryDiv.style.display = 'block';
+            }
+        }
+
+        /**
+         * Handle form submission
+         */
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!selectedService || !selectedDate || !selectedTime) {
+                alert('Please complete all required fields');
+                return;
+            }
+
+            const bookBtn = document.getElementById('bookBtn');
+            bookBtn.disabled = true;
+
+            try {
+                // Create booking
+                const response = await fetch('/ajax/bookings/create-booking.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        service_id: selectedService.id,
+                        date: selectedDate,
+                        time: selectedTime,
+                        customer_id: 0,
+                        customer_name: document.getElementById('customerName').value,
+                        customer_email: document.getElementById('customerEmail').value,
+                        customer_phone: document.getElementById('customerPhone').value,
+                        notes: document.getElementById('notes').value
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!result.success) {
+                    throw new Error(result.error || 'Booking failed');
+                }
+
+                // Proceed to payment
+                const booking = result.booking;
+                mpesaPaymentHandler.initiateBookingPayment(
+                    booking.id,
+                    booking.service_price,
+                    booking.customer_phone,
+                    (paymentResult) => {
+                        alert('Payment successful! Your appointment has been confirmed.');
+                        // Redirect to booking confirmation
+                        // window.location.href = `/booking-confirmation.html?id=${booking.id}`;
+                    },
+                    (error) => {
+                        // Unlock slot on payment failure
+                        alert('Payment failed. Your slot has been released.');
+                        bookBtn.disabled = false;
+                    }
+                );
+
+            } catch (error) {
+                console.error('Booking error:', error);
+                alert('Error creating booking: ' + error.message);
+                bookBtn.disabled = false;
+            }
+        });
+
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('dateInput').min = today;
+    </script>
+</body>
+</html>
