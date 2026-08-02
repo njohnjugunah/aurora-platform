@@ -60,7 +60,7 @@ class SaleControllerTest extends TestCase
             ['id' => 2, 'customer_id' => 2, 'total_amount' => 2000],
         ];
 
-        $this->saleRepository->method('findFiltered')->willReturn([
+        $this->saleRepository->method('findPaginated')->willReturn([
             'data' => $mockSales,
             'total' => 2,
         ]);
@@ -68,6 +68,7 @@ class SaleControllerTest extends TestCase
         $result = $this->controller->list($query);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
         $this->assertCount(2, $result['data']);
     }
 
@@ -86,6 +87,7 @@ class SaleControllerTest extends TestCase
         $result = $this->controller->get($saleId);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
         $this->assertEquals($mockSale, $result['data']);
     }
 
@@ -115,7 +117,7 @@ class SaleControllerTest extends TestCase
         $result = $this->controller->create($request);
 
         $this->assertEquals('success', $result['status']);
-        $this->assertEquals(201, $result['meta']['code']);
+        $this->assertTrue($result['success']);
     }
 
     public function testProcessPaymentCash(): void
@@ -142,6 +144,7 @@ class SaleControllerTest extends TestCase
         $result = $this->controller->payment($saleId, $request);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testProcessPaymentMpesa(): void
@@ -169,6 +172,7 @@ class SaleControllerTest extends TestCase
         $result = $this->controller->payment($saleId, $request);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testProcessPaymentInvalidAmount(): void
@@ -190,6 +194,7 @@ class SaleControllerTest extends TestCase
         $result = $this->controller->payment($saleId, $request);
 
         $this->assertEquals('error', $result['status']);
+        $this->assertFalse($result['success']);
         $this->assertEquals('VALIDATION_ERROR', $result['error']['code']);
     }
 
@@ -214,6 +219,7 @@ class SaleControllerTest extends TestCase
         $result = $this->controller->refund($saleId, $request);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testRefundSaleNotCompleted(): void
@@ -231,6 +237,7 @@ class SaleControllerTest extends TestCase
         $result = $this->controller->refund($saleId, $request);
 
         $this->assertEquals('error', $result['status']);
+        $this->assertFalse($result['success']);
         $this->assertEquals('BUSINESS_RULE_VIOLATION', $result['error']['code']);
     }
 }

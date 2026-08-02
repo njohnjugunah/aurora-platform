@@ -44,14 +44,15 @@ class CustomerControllerTest extends TestCase
             ['id' => 2, 'name' => 'Jane Smith', 'loyalty_tier' => 'Gold'],
         ];
 
-        $this->customerRepository->method('findFiltered')->willReturn([
-            'data' => $mockCustomers,
+        $this->customerRepository->method('findPaginated')->willReturn([
+            'customers' => $mockCustomers,
             'total' => 2,
         ]);
 
         $result = $this->controller->list($query);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
         $this->assertCount(2, $result['data']);
     }
 
@@ -70,6 +71,7 @@ class CustomerControllerTest extends TestCase
         $result = $this->controller->get($customerId);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
         $this->assertEquals($mockCustomer, $result['data']);
     }
 
@@ -81,14 +83,15 @@ class CustomerControllerTest extends TestCase
             'phone' => '+254712345678',
         ];
 
-        $this->validator->method('validate')->willReturn(true);
+        $this->validator->method('validate'); // Returns void
         $this->customerRepository->method('save')->willReturn(1);
         $this->customerRepository->method('findById')->willReturn(array_merge(['id' => 1], $request));
 
         $result = $this->controller->create($request);
 
         $this->assertEquals('success', $result['status']);
-        $this->assertEquals(201, $result['meta']['code']);
+        $this->assertTrue($result['success']);
+        $this->assertNotEmpty($result['data']);
     }
 
     public function testCreateCustomerValidationError(): void
@@ -105,6 +108,7 @@ class CustomerControllerTest extends TestCase
         $result = $this->controller->create($request);
 
         $this->assertEquals('error', $result['status']);
+        $this->assertFalse($result['success']);
         $this->assertEquals('VALIDATION_ERROR', $result['error']['code']);
     }
 
@@ -123,12 +127,13 @@ class CustomerControllerTest extends TestCase
         ];
 
         $this->customerRepository->method('findById')->willReturn($existingCustomer);
-        $this->validator->method('validateUpdate')->willReturn(true);
+        $this->validator->method('validateUpdate'); // Returns void
         $this->customerRepository->method('update')->willReturn(1);
 
         $result = $this->controller->update($customerId, $request);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testDeleteCustomer(): void
@@ -146,6 +151,7 @@ class CustomerControllerTest extends TestCase
         $result = $this->controller->delete($customerId);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testDeleteCustomerNotFound(): void

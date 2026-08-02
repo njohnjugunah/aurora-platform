@@ -27,9 +27,10 @@ class InventoryControllerTest extends TestCase
 
     public function testListProducts(): void
     {
-        $this->repository->method('findFiltered')->willReturn(['data' => [['id' => 1, 'name' => 'Product 1']], 'total' => 1]);
+        $this->repository->method('findPaginated')->willReturn(['data' => [['id' => 1, 'name' => 'Product 1']], 'total' => 1]);
         $result = $this->controller->listProducts(['page' => 1]);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testGetStock(): void
@@ -37,6 +38,7 @@ class InventoryControllerTest extends TestCase
         $this->repository->method('findById')->willReturn(['product_id' => 1, 'quantity_on_hand' => 100]);
         $result = $this->controller->getStock(1);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testAdjustStock(): void
@@ -45,17 +47,20 @@ class InventoryControllerTest extends TestCase
         $this->repository->method('update')->willReturn(1);
         $result = $this->controller->adjustStock(1, ['quantity' => 10, 'adjustmentType' => 'purchase']);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testGetMovements(): void
     {
         $result = $this->controller->getMovements(1, ['page' => 1]);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testGetLowStock(): void
     {
         $result = $this->controller->getLowStock(['page' => 1]);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 }

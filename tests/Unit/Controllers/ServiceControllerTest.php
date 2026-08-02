@@ -24,9 +24,10 @@ class ServiceControllerTest extends TestCase
 
     public function testList(): void
     {
-        $this->repository->method('findFiltered')->willReturn(['data' => [['id' => 1, 'name' => 'Service 1']], 'total' => 1]);
+        $this->repository->method('findPaginated')->willReturn(['data' => [['id' => 1, 'name' => 'Service 1']], 'total' => 1]);
         $result = $this->controller->list(['page' => 1, 'limit' => 50]);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testGet(): void
@@ -34,6 +35,7 @@ class ServiceControllerTest extends TestCase
         $this->repository->method('findById')->willReturn(['id' => 1, 'name' => 'Service 1']);
         $result = $this->controller->get(1);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testCreate(): void
@@ -42,6 +44,7 @@ class ServiceControllerTest extends TestCase
         $this->repository->method('findById')->willReturn(['id' => 1, 'name' => 'Service 1']);
         $result = $this->controller->create(['name' => 'Service 1', 'category' => 'Test', 'base_price' => 100, 'duration_minutes' => 60]);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testUpdate(): void
@@ -50,6 +53,7 @@ class ServiceControllerTest extends TestCase
         $this->repository->method('update')->willReturn(1);
         $result = $this->controller->update(1, ['name' => 'Updated']);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testDelete(): void
@@ -58,5 +62,6 @@ class ServiceControllerTest extends TestCase
         $this->repository->method('delete')->willReturn(1);
         $result = $this->controller->delete(1);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 }

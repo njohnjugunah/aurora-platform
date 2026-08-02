@@ -24,9 +24,10 @@ class StaffControllerTest extends TestCase
 
     public function testList(): void
     {
-        $this->repository->method('findFiltered')->willReturn(['data' => [['id' => 1, 'first_name' => 'John']], 'total' => 1]);
+        $this->repository->method('findPaginated')->willReturn(['data' => [['id' => 1, 'first_name' => 'John']], 'total' => 1]);
         $result = $this->controller->list(['page' => 1]);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testGet(): void
@@ -34,6 +35,7 @@ class StaffControllerTest extends TestCase
         $this->repository->method('findById')->willReturn(['id' => 1, 'first_name' => 'John']);
         $result = $this->controller->get(1);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testPerformance(): void
@@ -41,6 +43,7 @@ class StaffControllerTest extends TestCase
         $this->repository->method('findById')->willReturn(['id' => 1]);
         $result = $this->controller->performance(1);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testCommission(): void
@@ -48,5 +51,6 @@ class StaffControllerTest extends TestCase
         $this->repository->method('findById')->willReturn(['id' => 1]);
         $result = $this->controller->commission(1, ['period' => 'monthly']);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 }

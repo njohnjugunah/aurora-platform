@@ -135,6 +135,7 @@ class AppointmentControllerTest extends TestCase
         $result = $this->controller->create($request);
 
         $this->assertEquals('error', $result['status']);
+        $this->assertFalse($result['success']);
         $this->assertEquals('VALIDATION_ERROR', $result['error']['code']);
     }
 
@@ -154,12 +155,13 @@ class AppointmentControllerTest extends TestCase
         ];
 
         $this->appointmentRepository->method('findById')->willReturn($existingAppointment);
-        $this->validator->method('validateUpdate')->willReturn(true);
+        $this->validator->method('validateUpdate'); // Returns void
         $this->appointmentRepository->method('update')->willReturn(1);
 
         $result = $this->controller->update($appointmentId, $request);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testUpdateAppointmentNotFound(): void
@@ -191,6 +193,7 @@ class AppointmentControllerTest extends TestCase
         $result = $this->controller->cancel($appointmentId, $request);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testCancelAppointmentAlreadyCancelled(): void

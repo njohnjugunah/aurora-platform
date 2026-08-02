@@ -24,9 +24,10 @@ class UserControllerTest extends TestCase
 
     public function testList(): void
     {
-        $this->repository->method('findFiltered')->willReturn(['data' => [['id' => 1, 'email' => 'test@example.com']], 'total' => 1]);
+        $this->repository->method('findPaginated')->willReturn(['data' => [['id' => 1, 'email' => 'test@example.com']], 'total' => 1]);
         $result = $this->controller->list(['page' => 1]);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testGet(): void
@@ -34,6 +35,7 @@ class UserControllerTest extends TestCase
         $this->repository->method('findById')->willReturn(['id' => 1, 'email' => 'test@example.com']);
         $result = $this->controller->get(1);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testCreate(): void
@@ -42,6 +44,7 @@ class UserControllerTest extends TestCase
         $this->repository->method('findById')->willReturn(['id' => 1, 'email' => 'new@example.com']);
         $result = $this->controller->create(['email' => 'new@example.com', 'password' => 'password123', 'first_name' => 'John', 'last_name' => 'Doe']);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testUpdate(): void
@@ -50,6 +53,7 @@ class UserControllerTest extends TestCase
         $this->repository->method('update')->willReturn(1);
         $result = $this->controller->update(1, ['email' => 'updated@example.com']);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testDelete(): void
@@ -58,5 +62,6 @@ class UserControllerTest extends TestCase
         $this->repository->method('delete')->willReturn(1);
         $result = $this->controller->delete(1);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 }

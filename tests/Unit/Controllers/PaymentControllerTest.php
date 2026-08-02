@@ -38,7 +38,7 @@ class PaymentControllerTest extends TestCase
     {
         $query = ['page' => 1, 'limit' => 50];
 
-        $this->paymentRepository->method('findFiltered')->willReturn([
+        $this->paymentRepository->method('findPaginated')->willReturn([
             'data' => [
                 ['id' => 1, 'amount' => 1000, 'status' => 'Successful'],
                 ['id' => 2, 'amount' => 500, 'status' => 'Pending'],
@@ -49,6 +49,7 @@ class PaymentControllerTest extends TestCase
         $result = $this->controller->list($query);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
         $this->assertCount(2, $result['data']);
     }
 
@@ -65,6 +66,7 @@ class PaymentControllerTest extends TestCase
         $result = $this->controller->get($paymentId);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testVerifyPayment(): void
@@ -81,6 +83,7 @@ class PaymentControllerTest extends TestCase
         $result = $this->controller->verify($paymentId, $request);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testRefundPayment(): void
@@ -98,5 +101,6 @@ class PaymentControllerTest extends TestCase
         $result = $this->controller->refund($paymentId, $request);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 }
