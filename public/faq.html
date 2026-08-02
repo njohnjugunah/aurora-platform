@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - GlamByMariga Beauty Studio</title>
+    <meta name="description" content="Frequently Asked Questions about our beauty services, pricing, and booking at GlamByMariga.">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/glambymariga-theme.css" rel="stylesheet">
+    <link href="css/luxury-components.css" rel="stylesheet">
+    <link href="css/animations.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-weight: 600;
+            color: var(--rose-gold-dark);
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .faq-question:hover {
+            background: var(--soft-pink);
+            padding-left: 2rem;
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 1.5rem 1.5rem;
+            color: var(--gray-medium);
+            line-height: 1.8;
+            border-top: 1px solid var(--beige);
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="nav-brand"><i class="fas fa-sparkles"></i> GlamByMariga</a>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item"><a href="about.html">About</a></li>
+                    <li class="nav-item"><a href="index.html#services">Services</a></li>
+                    <li class="nav-item"><a href="gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a href="testimonials.html">Reviews</a></li>
+                    <li class="nav-item"><a href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a href="login.html" class="btn btn-primary btn-sm">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-banner" style="height: 50vh; min-height: 350px;">
+        <div class="hero-content">
+            <h1 class="fade-in">Frequently Asked Questions</h1>
+            <p class="hero-subtitle fade-in" style="animation-delay: 0.2s;">We're Here to Help</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Common Questions</h2>
+                <p class="section-subtitle">Find answers to popular questions about our services</p>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-lg-8 mx-auto fade-in-up-stagger">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item active">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How do I book an appointment?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            You can book an appointment through our website using our online booking system, or call us at +254 712 345 678. We offer flexible scheduling from Monday to Saturday, 8 AM to 8 PM.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What is the cost of lash extensions?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Lash extension prices vary depending on the type: Classic Lashes start at KES 3,500, Volume Lashes at KES 5,000, and Mega Volume at KES 7,500. Prices include a consultation and professional application.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How long do lash extensions last?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Lash extensions typically last 3-5 weeks depending on your natural lash growth cycle. We recommend maintenance appointments every 3 weeks to keep them looking full and beautiful.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Can I wear makeup with lash extensions?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Yes, you can wear makeup with lash extensions. However, we recommend using oil-free products and avoiding mascara. Never pull or tug at your extensions when removing makeup.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Do you offer payment plans?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Yes! We accept all major payment methods including M-Pesa, credit cards, and cash. For packages over KES 20,000, we offer flexible payment plans. Ask our team for details.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 6 -->
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Is the salon wheelchair accessible?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Yes, our salon is fully wheelchair accessible with accessible restrooms. Please inform us when booking if you have any special requirements, and we'll ensure a comfortable experience.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 7 -->
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What is your cancellation policy?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            We require 24-hour notice for cancellations. If you cancel less than 24 hours before your appointment, a cancellation fee of 50% of the service cost will apply.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 8 -->
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Are your products hypoallergenic?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            We use high-quality, hypoallergenic products from trusted brands. If you have sensitive skin or allergies, please inform us during booking so we can prepare accordingly.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section gradient-warm" style="color: white;">
+        <div class="container text-center fade-in">
+            <h2 class="mb-4">Didn't Find Your Answer?</h2>
+            <p class="mb-4">Contact our team directly - we're always happy to help!</p>
+            <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GlamByMariga</h4>
+                    <p>Your premier destination for luxury beauty services.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="index.html#services">Lash Services</a></li>
+                        <li><a href="index.html#services">Hair Services</a></li>
+                        <li><a href="index.html#services">Beauty Treatments</a></li>
+                        <li><a href="index.html#services">View All</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="tel:+254712345678">+254 712 345 678</a></li>
+                        <li><a href="mailto:info@glambymariga.com">info@glambymariga.com</a></li>
+                        <li>Nairobi, Kenya</li>
+                        <li>Mon-Sat: 8AM-8PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 GlamByMariga. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleFAQ(button) {
+            const faqItem = button.closest('.faq-item');
+            faqItem.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

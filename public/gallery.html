@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - GlamByMariga Beauty Studio</title>
+    <meta name="description" content="Explore our beautiful gallery of lash extensions, hair services, and beauty treatments at GlamByMariga.">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- GlamByMariga Themes -->
+    <link href="css/glambymariga-theme.css" rel="stylesheet">
+    <link href="css/luxury-components.css" rel="stylesheet">
+    <link href="css/animations.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--rose-gold-dark);
+            background: white;
+            color: var(--rose-gold-dark);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--rose-gold-dark), var(--accent-gold));
+            color: white;
+            border-color: var(--accent-gold);
+        }
+
+        .filter-btn:hover {
+            background: var(--rose-gold-dark);
+            color: white;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 500;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            animation: slideInUp 0.4s ease-out;
+        }
+
+        .lightbox-image {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .lightbox-nav span {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-nav span:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="nav-brand">
+                    <i class="fas fa-sparkles"></i> GlamByMariga
+                </a>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item"><a href="about.html">About</a></li>
+                    <li class="nav-item"><a href="index.html#services">Services</a></li>
+                    <li class="nav-item"><a href="gallery.html" style="color: var(--rose-gold-dark);">Gallery</a></li>
+                    <li class="nav-item"><a href="testimonials.html">Reviews</a></li>
+                    <li class="nav-item"><a href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a href="login.html" class="btn btn-primary btn-sm">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-banner" style="height: 50vh; min-height: 350px;">
+        <div class="hero-content">
+            <h1 class="fade-in">Our Gallery</h1>
+            <p class="hero-subtitle fade-in" style="animation-delay: 0.2s;">Beautiful Transformations</p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Explore Our Work</h2>
+                <p class="section-subtitle">Stunning before & after photos showcasing our expertise</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="gallery-filter fade-in">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="lashes">Lashes</button>
+                <button class="filter-btn" data-filter="hair">Hair</button>
+                <button class="filter-btn" data-filter="beauty">Beauty</button>
+                <button class="filter-btn" data-filter="before-after">Before & After</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid fade-in-up-stagger">
+                <!-- Lashes Category -->
+                <div class="gallery-item" data-category="lashes" onclick="openLightbox(0)">
+                    <img src="images/gallery-lashes-1.jpg" alt="Classic Lash Extensions">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="lashes" onclick="openLightbox(1)">
+                    <img src="images/gallery-lashes-2.jpg" alt="Volume Lash Extensions">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="lashes" onclick="openLightbox(2)">
+                    <img src="images/gallery-lashes-3.jpg" alt="Mega Volume Lashes">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="lashes" onclick="openLightbox(3)">
+                    <img src="images/gallery-lashes-4.jpg" alt="Hybrid Lash Extensions">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <!-- Hair Category -->
+                <div class="gallery-item" data-category="hair" onclick="openLightbox(4)">
+                    <img src="images/gallery-hair-1.jpg" alt="Hair Installation">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="hair" onclick="openLightbox(5)">
+                    <img src="images/gallery-hair-2.jpg" alt="Hair Styling">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="hair" onclick="openLightbox(6)">
+                    <img src="images/gallery-hair-3.jpg" alt="Hair Transformation">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="hair" onclick="openLightbox(7)">
+                    <img src="images/gallery-hair-4.jpg" alt="Wig Installation">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <!-- Beauty Category -->
+                <div class="gallery-item" data-category="beauty" onclick="openLightbox(8)">
+                    <img src="images/gallery-beauty-1.jpg" alt="Beauty Treatment">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="beauty" onclick="openLightbox(9)">
+                    <img src="images/gallery-beauty-2.jpg" alt="Eyebrow Threading">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="beauty" onclick="openLightbox(10)">
+                    <img src="images/gallery-beauty-3.jpg" alt="Beauty Service">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="beauty" onclick="openLightbox(11)">
+                    <img src="images/gallery-beauty-4.jpg" alt="Beauty Makeover">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <!-- Before & After -->
+                <div class="gallery-item" data-category="before-after" onclick="openLightbox(12)">
+                    <img src="images/gallery-beforeafter-1.jpg" alt="Before & After">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="before-after" onclick="openLightbox(13)">
+                    <img src="images/gallery-beforeafter-2.jpg" alt="Before & After">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="before-after" onclick="openLightbox(14)">
+                    <img src="images/gallery-beforeafter-3.jpg" alt="Before & After">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="before-after" onclick="openLightbox(15)">
+                    <img src="images/gallery-beforeafter-4.jpg" alt="Before & After">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-icon"><i class="fas fa-search-plus"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-content" id="lightboxContent">
+            <img src="" alt="" class="lightbox-image" id="lightboxImage">
+        </div>
+        <div class="lightbox-nav">
+            <span onclick="previousImage()">&lt;</span>
+            <span onclick="nextImage()">&gt;</span>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="section gradient-warm" style="color: white;">
+        <div class="container text-center fade-in">
+            <h2 class="mb-4">Ready to Transform Your Look?</h2>
+            <p class="mb-4" style="font-size: 1.1rem;">
+                Book your appointment today and join thousands of satisfied clients
+            </p>
+            <a href="contact.html" class="btn btn-primary btn-lg">Book Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GlamByMariga</h4>
+                    <p>Your premier destination for luxury beauty services.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-icon" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="index.html#services">Lash Services</a></li>
+                        <li><a href="index.html#services">Hair Services</a></li>
+                        <li><a href="index.html#services">Beauty Treatments</a></li>
+                        <li><a href="index.html#services">View All</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="tel:+254712345678">+254 712 345 678</a></li>
+                        <li><a href="mailto:info@glambymariga.com">info@glambymariga.com</a></li>
+                        <li>Nairobi, Kenya</li>
+                        <li>Mon-Sat: 8AM-8PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 GlamByMariga. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let currentImageIndex = 0;
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Filter gallery items
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => item.classList.add('fade-in'), 10);
+                    } else {
+                        item.style.display = 'none';
+                        item.classList.remove('fade-in');
+                    }
+                });
+            });
+        });
+
+        function openLightbox(index) {
+            currentImageIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const image = document.getElementById('lightboxImage');
+            const src = galleryItems[index].querySelector('img').src;
+            image.src = src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
+            const image = document.getElementById('lightboxImage');
+            const src = galleryItems[currentImageIndex].querySelector('img').src;
+            image.src = src;
+        }
+
+        function previousImage() {
+            currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
+            const image = document.getElementById('lightboxImage');
+            const src = galleryItems[currentImageIndex].querySelector('img').src;
+            image.src = src;
+        }
+
+        // Close lightbox on ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+            if (e.key === 'ArrowRight') {
+                nextImage();
+            }
+            if (e.key === 'ArrowLeft') {
+                previousImage();
+            }
+        });
+    </script>
+</body>
+</html>
