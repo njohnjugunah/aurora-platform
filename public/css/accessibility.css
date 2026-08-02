@@ -1,0 +1,738 @@
+/**
+ * Accessibility & WCAG 2.1 AA Compliance Stylesheet
+ * Enhanced focus states, color contrast, and semantic HTML support
+ */
+
+/* ============================================================================
+   FOCUS INDICATORS & KEYBOARD NAVIGATION
+   ============================================================================ */
+
+/* Enhanced focus indicators for keyboard navigation */
+:focus-visible {
+    outline: 3px solid #3498db;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* High contrast focus for dark backgrounds */
+.sidebar a:focus-visible,
+.sidebar button:focus-visible {
+    outline-color: #5dade2;
+    box-shadow: 0 0 0 5px rgba(93, 173, 226, 0.2);
+}
+
+/* Remove default outlines we're replacing */
+:focus {
+    outline: none;
+}
+
+/* Focus indicators for form elements */
+.form-control:focus,
+.form-select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+    outline: 3px solid #3498db;
+    outline-offset: 2px;
+}
+
+.form-check-input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+    outline: 3px solid #3498db;
+}
+
+/* Focus indicators for buttons */
+.btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+    outline: 3px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* Primary button focus state */
+.btn-primary:focus-visible {
+    background-color: #2980b9;
+    border-color: #2980b9;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+}
+
+/* Tab focus indicators */
+.nav-link:focus-visible {
+    outline: 3px solid #3498db;
+    outline-offset: -3px;
+}
+
+/* ============================================================================
+   COLOR CONTRAST & READABILITY
+   ============================================================================ */
+
+/* Ensure sufficient color contrast (WCAG AA) */
+body {
+    color: #212529;
+    background-color: #ffffff;
+}
+
+.sidebar {
+    color: rgba(255, 255, 255, 0.95);
+    background-color: #2c3e50;
+}
+
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    color: #ffffff;
+    background-color: rgba(52, 152, 219, 0.15);
+}
+
+/* Link contrast */
+a {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #8e44ad;
+}
+
+a:hover {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+a:active {
+    color: #2980b9;
+}
+
+/* Button contrast */
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+/* Text in badges */
+.badge {
+    font-weight: 600;
+}
+
+.badge-success {
+    background-color: #27ae60;
+    color: #ffffff;
+}
+
+.badge-danger {
+    background-color: #e74c3c;
+    color: #ffffff;
+}
+
+.badge-warning {
+    background-color: #f39c12;
+    color: #ffffff;
+}
+
+.badge-info {
+    background-color: #3498db;
+    color: #ffffff;
+}
+
+/* Form labels */
+.form-label {
+    color: #212529;
+    font-weight: 500;
+}
+
+/* Helper text */
+.form-text {
+    color: #666666;
+    font-size: 0.875rem;
+}
+
+/* ============================================================================
+   SEMANTIC HTML & STRUCTURE
+   ============================================================================ */
+
+/* Semantic heading hierarchy */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0.5em;
+    margin-bottom: 0.3em;
+}
+
+/* Use actual heading tags, not just styled text */
+.page-title h1 {
+    font-size: 1.75rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.card-header h5,
+.card-header h6 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* List styling for accessibility */
+ul, ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+/* ============================================================================
+   SKIP LINKS & KEYBOARD NAVIGATION
+   ============================================================================ */
+
+/* Skip to main content link */
+.skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #3498db;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 0 0 4px 0;
+    font-weight: 600;
+    z-index: 100;
+}
+
+.skip-to-main:focus {
+    top: 0;
+}
+
+.skip-to-main:focus-visible {
+    top: 0;
+}
+
+/* ============================================================================
+   SCREEN READER ONLY CONTENT
+   ============================================================================ */
+
+.sr-only,
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Allow screen reader only content to be visible on focus */
+.sr-only:focus,
+.visually-hidden:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* ============================================================================
+   FORM ACCESSIBILITY
+   ============================================================================ */
+
+/* Associate labels with form inputs */
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #212529;
+}
+
+label[for] {
+    cursor: pointer;
+}
+
+/* Required field indicator */
+.required::after,
+[aria-required="true"]::after {
+    content: " *";
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Error messaging */
+.invalid-feedback {
+    display: block;
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: #e74c3c;
+    border-width: 2px;
+}
+
+.form-control.is-invalid:focus,
+.form-select.is-invalid:focus {
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25);
+}
+
+/* Success indication */
+.form-control.is-valid,
+.form-select.is-valid {
+    border-color: #27ae60;
+    border-width: 2px;
+}
+
+.valid-feedback {
+    display: block;
+    color: #27ae60;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+/* Placeholder text contrast */
+::placeholder {
+    color: #999999;
+    opacity: 1;
+}
+
+/* ============================================================================
+   TABLE ACCESSIBILITY
+   ============================================================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #f8f9fa;
+    color: #212529;
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
+}
+
+td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Zebra striping for readability */
+tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+/* Table caption */
+caption {
+    padding: 1rem;
+    caption-side: top;
+    color: #212529;
+    font-weight: 600;
+}
+
+/* ============================================================================
+   MODAL & DIALOG ACCESSIBILITY
+   ============================================================================ */
+
+.modal {
+    backdrop-filter: blur(4px);
+}
+
+.modal-backdrop.show {
+    opacity: 0.5;
+}
+
+.modal-header {
+    border-bottom: 2px solid #dee2e6;
+    padding: 1.5rem;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.modal-header .btn-close {
+    width: 32px;
+    height: 32px;
+    padding: 0.5rem;
+}
+
+.modal-header .btn-close:focus-visible {
+    outline: 3px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* ============================================================================
+   ALERT & NOTIFICATION ACCESSIBILITY
+   ============================================================================ */
+
+.alert {
+    border-left: 4px solid;
+    border-radius: 4px;
+}
+
+.alert-danger {
+    background-color: #fadbd8;
+    border-color: #e74c3c;
+    color: #78281f;
+}
+
+.alert-success {
+    background-color: #d5f4e6;
+    border-color: #27ae60;
+    color: #0b5345;
+}
+
+.alert-warning {
+    background-color: #fef5e7;
+    border-color: #f39c12;
+    color: #7d6608;
+}
+
+.alert-info {
+    background-color: #d6eaf8;
+    border-color: #3498db;
+    color: #1a5276;
+}
+
+/* Toast notifications role */
+.toast {
+    role: "status";
+}
+
+.toast-error {
+    role: "alert";
+}
+
+/* ============================================================================
+   ICON ACCESSIBILITY
+   ============================================================================ */
+
+/* Icons should have fallback text or aria-label */
+[role="img"] {
+    display: inline-block;
+}
+
+/* Decorative icons only - no screen reader announcement */
+.icon-decorative {
+    aria-hidden: "true";
+}
+
+/* Icon buttons need labels */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-icon i {
+    display: inline-block;
+}
+
+/* ============================================================================
+   MOTION & ANIMATION ACCESSIBILITY
+   ============================================================================ */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .sidebar.mobile-open {
+        transition: none;
+    }
+
+    .toast {
+        animation: none;
+    }
+
+    .modal.fade {
+        transition: none;
+    }
+}
+
+/* ============================================================================
+   PRINT ACCESSIBILITY
+   ============================================================================ */
+
+@media print {
+    .sidebar,
+    .top-navbar,
+    .btn,
+    .nav,
+    .pagination,
+    .mobile-menu-toggle {
+        display: none !important;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8rem;
+        color: #666;
+    }
+
+    .page {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    .card {
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
+
+/* ============================================================================
+   DARK MODE ACCESSIBILITY
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+
+    body {
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+    }
+
+    a {
+        color: #64b5f6;
+    }
+
+    a:visited {
+        color: #ce93d8;
+    }
+
+    .card {
+        background-color: #2d2d2d;
+        color: #e0e0e0;
+        border-color: #3d3d3d;
+    }
+
+    .form-control,
+    .form-select {
+        background-color: #2d2d2d;
+        color: #e0e0e0;
+        border-color: #3d3d3d;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        background-color: #2d2d2d;
+        color: #e0e0e0;
+        border-color: #64b5f6;
+        box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.25);
+    }
+
+    table {
+        background-color: #2d2d2d;
+        color: #e0e0e0;
+    }
+
+    th {
+        background-color: #3d3d3d;
+        color: #e0e0e0;
+        border-color: #4d4d4d;
+    }
+
+    td {
+        border-color: #4d4d4d;
+    }
+
+    .alert {
+        background-color: #2d2d2d;
+        border-color: #3d3d3d;
+    }
+}
+
+/* ============================================================================
+   TEXT SIZE & ZOOM
+   ============================================================================ */
+
+/* Allow up to 200% zoom without horizontal scroll */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* Ensure text remains readable at all zoom levels */
+body {
+    line-height: 1.6;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* No fixed widths that prevent zoom */
+.container,
+.content {
+    max-width: 100%;
+    width: 100%;
+}
+
+/* ============================================================================
+   RESPONSIVE TEXT
+   ============================================================================ */
+
+/* Use relative units for better accessibility */
+html {
+    font-size: 16px;
+}
+
+/* Use rem for most sizing */
+.container {
+    max-width: 1200px;
+}
+
+/* Avoid text truncation that hides meaning */
+.text-truncate {
+    /* only use when necessary, provide aria-label */
+    overflow: hidden;
+}
+
+/* ============================================================================
+   LINK ACCESSIBILITY
+   ============================================================================ */
+
+/* Links should be distinguishable from surrounding text */
+a {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.25em;
+}
+
+a:hover {
+    text-decoration-thickness: 3px;
+}
+
+/* Visited link styling */
+a:visited {
+    text-decoration: underline;
+}
+
+/* Focus/active states */
+a:active {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+}
+
+/* ============================================================================
+   BUTTON ACCESSIBILITY
+   ============================================================================ */
+
+button,
+[role="button"] {
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    min-width: 44px;
+}
+
+button:hover {
+    text-decoration: none;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button[aria-pressed="true"],
+button[aria-selected="true"] {
+    font-weight: 600;
+}
+
+/* ============================================================================
+   MISC ACCESSIBILITY IMPROVEMENTS
+   ============================================================================ */
+
+/* Line length for readability */
+article,
+.content {
+    max-width: 800px;
+}
+
+/* Spacer elements should not interfere with navigation */
+.spacer {
+    display: none;
+}
+
+/* Separators should be accessible */
+hr {
+    border: none;
+    border-top: 1px solid #dee2e6;
+    margin: 2rem 0;
+}
+
+/* Language declaration (should be in HTML lang attribute) */
+/* Example: <html lang="en"> */
+
+/* Ensure all interactive elements have sufficient size */
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    min-height: 44px;
+    min-width: 44px;
+}
