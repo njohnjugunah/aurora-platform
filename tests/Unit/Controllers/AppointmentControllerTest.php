@@ -51,17 +51,16 @@ class AppointmentControllerTest extends TestCase
             ['id' => 2, 'customer_id' => 2, 'staff_id' => 1],
         ];
 
-        $this->appointmentRepository->method('findFiltered')->willReturn([
-            'data' => $mockAppointments,
+        $this->appointmentRepository->method('findPaginated')->willReturn([
+            'appointments' => $mockAppointments,
             'total' => 2,
-            'page' => 1,
-            'limit' => 50,
         ]);
 
         $result = $this->controller->list($query);
 
         $this->assertIsArray($result);
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
         $this->assertCount(2, $result['data']);
     }
 
@@ -80,6 +79,7 @@ class AppointmentControllerTest extends TestCase
         $result = $this->controller->get($appointmentId);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
         $this->assertEquals($mockAppointment, $result['data']);
     }
 
@@ -104,7 +104,7 @@ class AppointmentControllerTest extends TestCase
             'startTime' => '2026-08-15 10:00:00',
         ];
 
-        $this->validator->method('validate')->willReturn(true);
+        $this->validator->method('validate'); // Returns void, no return value
         $this->bookingService->method('bookAppointment')->willReturn(42);
         $this->appointmentRepository->method('findById')->willReturn([
             'id' => 42,
@@ -116,7 +116,8 @@ class AppointmentControllerTest extends TestCase
         $result = $this->controller->create($request);
 
         $this->assertEquals('success', $result['status']);
-        $this->assertEquals(201, $result['meta']['code']);
+        $this->assertTrue($result['success']);
+        $this->assertNotEmpty($result['data']);
     }
 
     public function testCreateAppointmentValidationError(): void

@@ -39,12 +39,15 @@ class AuthControllerTest extends TestCase
         $request = ['email' => 'user@example.com', 'password' => 'password123'];
 
         $this->loginValidator->method('validate')->willReturn(true);
-        $this->authService->method('login')->willReturn(['user_id' => 1, 'email' => 'user@example.com']);
-        $this->jwtService->method('generateToken')->willReturn('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...');
+        $this->authService->method('authenticate')->willReturn([
+            'user' => ['id' => 1, 'email' => 'user@example.com'],
+            'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+        ]);
 
         $result = $this->controller->login($request);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testLoginInvalidCredentials(): void
@@ -52,11 +55,12 @@ class AuthControllerTest extends TestCase
         $request = ['email' => 'user@example.com', 'password' => 'wrongpassword'];
 
         $this->loginValidator->method('validate')->willReturn(true);
-        $this->authService->method('login')->willReturn(null);
+        $this->authService->method('authenticate')->willThrowException(new \Exception('Invalid credentials'));
 
         $result = $this->controller->login($request);
 
         $this->assertEquals('error', $result['status']);
+        $this->assertFalse($result['success']);
     }
 
     public function testLoginValidationError(): void
@@ -79,23 +83,25 @@ class AuthControllerTest extends TestCase
 
     public function testRefreshToken(): void
     {
-        $request = ['refresh_token' => 'old_refresh_token'];
+        $request = ['Authorization' => 'Bearer old_refresh_token'];
 
-        $this->jwtService->method('refreshToken')->willReturn('new_access_token');
+        $this->authService->method('refreshToken')->willReturn(['token' => 'new_access_token']);
 
         $result = $this->controller->refresh($request);
 
         $this->assertEquals('success', $result['status']);
+        $this->assertTrue($result['success']);
     }
 
     public function testRefreshTokenInvalid(): void
     {
-        $request = ['refresh_token' => 'invalid_token'];
+        $request = ['Authorization' => 'Bearer invalid_token'];
 
-        $this->jwtService->method('refreshToken')->willReturn(null);
+        $this->authService->method('refreshToken')->willThrowException(new \Exception('Invalid token'));
 
         $result = $this->controller->refresh($request);
 
         $this->assertEquals('error', $result['status']);
+        $this->assertFalse($result['success']);
     }
 }
