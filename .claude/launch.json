@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Aurora Frontend",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "--directory", "public"],
+      "port": 8000,
+      "autoPort": true
+    },
+    {
+      "name": "Aurora Mock API",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["mock-api-server.js"],
+      "port": 9000,
+      "autoPort": true
+    }
+  ]
+}
