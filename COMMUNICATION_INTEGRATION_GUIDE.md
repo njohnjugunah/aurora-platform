@@ -361,5 +361,238 @@ $emailService->sendTemplate(
 
 ---
 
-**Phase 6 Implementation Status:** COMPLETE (Part 1 - Email Services)  
-**Next:** Phase 6B - Advanced features (SMS, push notifications, advanced campaigns)
+## Phase 6B - Advanced Communications
+
+### New Services
+
+#### Push Notification Service (`includes/communication/PushNotificationService.php`)
+Web push and in-app notifications with subscription management.
+
+**Key Methods:**
+- `sendWebPush()` - Send browser push notifications
+- `sendInAppNotification()` - Send in-app notifications
+- `registerSubscription()` - Register device for push notifications
+- `getInAppNotifications()` - Retrieve unread in-app notifications
+- `markAsRead()` - Mark notification as read
+- `notifyOrderStatus()` - Send order status notifications
+- `sendPromotion()` - Send promotional notifications
+
+**Features:**
+- Web Push Protocol support
+- In-app notification persistence
+- Quiet hours support
+- Notification history tracking
+- Deep linking with action URLs
+
+#### SMS Service (`includes/communication/SMSService.php`)
+SMS delivery via Africastalking or Twilio.
+
+**Key Methods:**
+- `send()` - Send SMS message
+- `sendViaAfricasTalking()` - Africastalking provider
+- `sendViaTwilio()` - Twilio provider
+- `sendAppointmentReminder()` - Appointment reminder SMS
+- `sendOrderStatus()` - Order status SMS
+
+**Configuration:**
+```
+SMS_PROVIDER=africastalking|twilio
+SMS_API_KEY=your_api_key
+SMS_API_SECRET=your_api_secret
+SMS_SENDER_ID=GlamByMariga
+TWILIO_ACCOUNT_SID=your_account_sid
+TWILIO_AUTH_TOKEN=your_auth_token
+TWILIO_PHONE_NUMBER=+1234567890
+```
+
+#### Campaign Service (`includes/communication/CampaignService.php`)
+Advanced campaign scheduling, A/B testing, and segment targeting.
+
+**Key Methods:**
+- `createCampaign()` - Create marketing campaign
+- `scheduleCampaign()` - Schedule campaign with recurrence
+- `createABTest()` - Create A/B test variant
+- `determineABTestWinner()` - Analyze test results
+- `sendCampaign()` - Send campaign to segment
+- `getSegmentRecipients()` - Get recipients by segment
+- `getCampaignAnalytics()` - Get performance metrics
+
+**Segments:**
+- `all` - All customers
+- `repeat` - Customers with multiple orders
+- `high_value` - Top spenders (>KES 50,000)
+- `inactive` - No orders in 90+ days
+- `new` - Registered in last 30 days
+
+#### Behavioral Automation Service (`includes/communication/BehavioralAutomationService.php`)
+Automated triggers based on customer behavior and engagement.
+
+**Key Methods:**
+- `createRule()` - Create automation rule
+- `trackAbandonedCart()` - Track cart abandonment
+- `sendAbandonedCartReminder()` - Abandoned cart email/SMS
+- `calculateEngagementScore()` - Calculate customer engagement (0-100)
+- `sendWinBackCampaign()` - Send win-back offer to at-risk customers
+- `processAutomationRules()` - Execute all active rules
+- `getAtRiskCustomers()` - List customers at churn risk
+
+**Trigger Types:**
+- `abandoned_cart` - When cart left for N hours
+- `low_engagement` - When engagement score < threshold
+- `birthday` - On customer birthday
+- `anniversary` - On customer account anniversary
+- `reorder_due` - When customer hasn't ordered in N days
+- `low_stock_alert` - When product stock runs low
+- `review_request` - Request review for delivered items
+- `win_back` - Target at-risk customers
+- `custom` - Custom trigger conditions
+
+### Database Schema - Phase 6B
+
+**New Tables:**
+1. `push_subscriptions` - Device push subscriptions
+2. `push_notification_logs` - Push delivery logs
+3. `in_app_notifications` - In-app notification history
+4. `automation_rules` - Automation rule definitions
+5. `automation_executions` - Automation execution logs
+6. `campaign_ab_tests` - A/B test configurations
+7. `campaign_ab_test_recipients` - A/B test variant assignments
+8. `campaign_schedules` - Campaign scheduling
+9. `abandoned_carts` - Abandoned cart tracking
+10. `customer_engagement_scores` - Engagement metrics
+11. `push_notification_settings` - Customer push preferences
+
+### API Endpoints - Phase 6B
+
+#### Push Notifications
+**POST** `/ajax/communication/push-notifications.php`
+```json
+{
+    "action": "register_subscription|mark_read|send_promotion",
+    "subscription": { "endpoint": "...", "keys": {...} },
+    "notification_id": 123,
+    "title": "Promotion",
+    "message": "20% off today!"
+}
+```
+
+#### Automation Management
+**POST** `/ajax/communication/automation.php`
+```json
+{
+    "action": "create_rule|track_abandoned_cart|send_cart_reminder|calculate_engagement|win_back_campaign|process_rules|at_risk_customers",
+    "rule": { "name": "...", "trigger_type": "abandoned_cart", ... },
+    "customer_id": 123,
+    "cart_items": [...],
+    "cart_value": 5000
+}
+```
+
+#### Campaign Management
+**POST** `/ajax/communication/campaigns.php`
+```json
+{
+    "action": "create|schedule|send|create_ab_test|determine_winner|segment_recipients",
+    "campaign_id": 1,
+    "schedule": { "send_at": "2026-08-15 10:00:00", "timezone": "Africa/Nairobi" },
+    "test": { "variant_a_template_id": 1, "variant_b_template_id": 2, "metric": "open_rate" }
+}
+```
+
+### Engagement Scoring Algorithm
+
+**Components (0-100 total):**
+- Email open rate: 0-30 points (weighted 0.3)
+- Email click rate: 0-20 points (weighted 0.2)
+- Order frequency: 0-25 points (weighted 0.25)
+- Lifetime value: 0-25 points (weighted 0.25)
+
+**Risk Detection:**
+- At-risk if: score < 40 AND last order > 90 days ago
+- Win-back offer: 20% discount code auto-generated
+
+### Automation Examples
+
+**Abandoned Cart Reminder (1 hour):**
+```php
+$automationService->createRule([
+    'name' => 'Cart Reminder - 1 hour',
+    'trigger_type' => 'abandoned_cart',
+    'trigger_condition' => ['hours_ago' => 1],
+    'action_type' => 'multi',
+    'action_config' => ['channels' => ['email', 'sms']]
+]);
+```
+
+**Win-Back Campaign:**
+```php
+$automationService->createRule([
+    'name' => 'Win-Back for At-Risk',
+    'trigger_type' => 'low_engagement',
+    'trigger_condition' => ['engagement_threshold' => 30],
+    'action_type' => 'email',
+    'target_segment' => 'inactive'
+]);
+```
+
+**Birthday Offer:**
+```php
+$automationService->createRule([
+    'name' => 'Birthday 20% Off',
+    'trigger_type' => 'birthday',
+    'action_type' => 'email',
+    'action_config' => ['discount_code' => 'BIRTHDAY20']
+]);
+```
+
+### A/B Testing Workflow
+
+1. **Create Campaign**
+   ```php
+   $campaignService->createCampaign([
+       'name' => 'Summer Sale',
+       'target_segment' => 'repeat'
+   ]);
+   ```
+
+2. **Setup A/B Test**
+   ```php
+   $campaignService->createABTest($campaignId, [
+       'variant_a_template_id' => 5,
+       'variant_b_template_id' => 6,
+       'split_percentage' => 50,
+       'metric' => 'open_rate',
+       'test_duration_days' => 3
+   ]);
+   ```
+
+3. **Send Campaign**
+   ```php
+   $campaignService->sendCampaign($campaignId);
+   ```
+
+4. **Analyze Results** (after test duration)
+   ```php
+   $campaignService->determineABTestWinner($testId);
+   ```
+
+### Feature Summary
+
+✅ SMS integration (Africastalking & Twilio)
+✅ Web push notifications
+✅ In-app notification system
+✅ Abandoned cart tracking
+✅ Customer engagement scoring
+✅ At-risk customer detection
+✅ Win-back campaigns
+✅ A/B testing for campaigns
+✅ Advanced scheduling (recurring, optimal send time)
+✅ Behavioral automation triggers
+✅ Quiet hours / Do Not Disturb
+✅ Multi-channel notifications
+✅ Campaign analytics & reporting
+
+---
+
+**Phase 6 Implementation Status:** COMPLETE (Part 1 - Email Services + Part 2 - Advanced Communications)  
+**Next:** Phase 6.5 - Admin Dashboard integration for communication management
