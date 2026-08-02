@@ -24,14 +24,12 @@ class PushNotificationManager {
             this.serviceWorkerRegistration = await navigator.serviceWorker.register('/service-worker.js', {
                 scope: '/'
             });
-            console.log('Service Worker registered');
 
             // Request permission
             const permission = Notification.permission;
             if (permission === 'default') {
                 const result = await Notification.requestPermission();
                 if (result !== 'granted') {
-                    console.log('Notification permission denied');
                     return false;
                 }
             }
@@ -67,7 +65,6 @@ class PushNotificationManager {
 
             // Send subscription to server
             await this.registerSubscription(subscription);
-            console.log('Push subscription registered');
 
         } catch (error) {
             console.error('Push subscription error:', error);

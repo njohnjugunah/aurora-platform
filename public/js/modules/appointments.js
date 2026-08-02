@@ -17,7 +17,6 @@ const AppointmentsModule = {
     },
 
     async init() {
-        console.log('Initializing Appointments Module');
         await this.loadAppointments();
         this.setupEventListeners();
     },
@@ -186,7 +185,6 @@ const AppointmentsModule = {
 
     showSuccess(message) {
         // Implement toast notification
-        console.log('✓', message);
     },
 
     showError(message) {

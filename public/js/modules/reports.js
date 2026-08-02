@@ -47,7 +47,6 @@ const ReportsModule = {
     },
 
     async init() {
-        console.log('Initializing Reports Module');
         this.render();
         this.setupEventListeners();
         await this.loadRevenueReport();

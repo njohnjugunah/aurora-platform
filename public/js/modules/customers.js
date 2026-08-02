@@ -18,7 +18,6 @@ const CustomersModule = {
     },
 
     async init() {
-        console.log('Initializing Customers Module');
         await this.loadCustomers();
         this.setupEventListeners();
     },
@@ -228,7 +227,6 @@ const CustomersModule = {
     },
 
     showSuccess(message) {
-        console.log('✓', message);
     },
 
     showError(message) {

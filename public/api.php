@@ -101,14 +101,25 @@ try {
         $result = $route();
         echo json_encode($result);
     } else {
+        // Route to specific handler if defined
         $controllerClass = 'App\\Application\\Controllers\\' . $route['controller'];
-        // TODO: Instantiate controller with dependencies via DI container
-        // For now, just return a stub response
-        echo json_encode([
-            'success' => true,
-            'message' => 'API is operational',
-            'meta' => ['timestamp' => date('c')]
-        ]);
+        if (class_exists($controllerClass)) {
+            $controller = new $controllerClass();
+            $action = $route['action'] ?? 'handle';
+            if (method_exists($controller, $action)) {
+                $result = $controller->$action();
+                echo json_encode($result);
+            } else {
+                throw new Exception("Action {$action} not found in {$controllerClass}");
+            }
+        } else {
+            // Controller not found - return operational status
+            echo json_encode([
+                'success' => true,
+                'message' => 'API is operational',
+                'meta' => ['timestamp' => date('c'), 'endpoint' => $_SERVER['REQUEST_URI']]
+            ]);
+        }
     }
 } catch (Exception $e) {
     http_response_code(500);

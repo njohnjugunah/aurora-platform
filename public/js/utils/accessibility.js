@@ -21,7 +21,6 @@ class AccessibilityManager {
         this.addAriaLabels();
         this.monitorColorContrast();
 
-        console.log('Accessibility Manager initialized');
     }
 
     /**

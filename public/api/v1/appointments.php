@@ -9,9 +9,11 @@ require_once __DIR__ . '/../../../config/bootstrap.php';
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../includes/mobile/JwtTokenService.php';
 require_once __DIR__ . '/../../../includes/mobile/MobileApiMiddleware.php';
+require_once __DIR__ . '/../../../includes/communication/NotificationService.php';
 
 use GlamByMariga\Mobile\JwtTokenService;
 use GlamByMariga\Mobile\MobileApiMiddleware;
+use GlamByMariga\Communication\NotificationService;
 
 // Initialize API response
 MobileApiMiddleware::init();
@@ -206,7 +208,13 @@ function handleCreateAppointment(\PDO $db, int $customerId, array $data): void
 
     $bookingId = $db->lastInsertId();
 
-    // TODO: Send confirmation notification
+    // Send confirmation notification
+    try {
+        $notificationService = new NotificationService($db);
+        $notificationService->notifyAppointmentConfirmed($bookingId);
+    } catch (Exception $e) {
+        error_log('Notification sending failed: ' . $e->getMessage());
+    }
 
     MobileApiMiddleware::success(
         ['booking_id' => $bookingId, 'status' => 'pending'],

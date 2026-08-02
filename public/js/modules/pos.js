@@ -19,7 +19,6 @@ const POSModule = {
     TAX_RATE: 0.16, // 16% VAT
 
     async init() {
-        console.log('Initializing POS Module');
         await this.loadServices();
         await this.loadCustomers();
         this.setupEventListeners();
@@ -265,7 +264,6 @@ const POSModule = {
     },
 
     showSuccess(message) {
-        console.log('✓', message);
     },
 
     showError(message) {

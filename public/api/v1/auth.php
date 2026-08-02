@@ -10,10 +10,12 @@ require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../includes/security/InputValidator.php';
 require_once __DIR__ . '/../../../includes/mobile/JwtTokenService.php';
 require_once __DIR__ . '/../../../includes/mobile/MobileApiMiddleware.php';
+require_once __DIR__ . '/../../../includes/communication/EmailService.php';
 
 use GlamByMariga\Security\InputValidator;
 use GlamByMariga\Mobile\JwtTokenService;
 use GlamByMariga\Mobile\MobileApiMiddleware;
+use GlamByMariga\Communication\EmailService;
 
 // Initialize API response
 MobileApiMiddleware::init();
@@ -283,8 +285,35 @@ function handleForgotPassword(\PDO $db, array $data): void
         return;
     }
 
-    // TODO: Generate reset token and send email
-    // This will be implemented in Phase 10 (Email Service)
+    $customer = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+    // Generate reset token (valid for 1 hour)
+    $resetToken = bin2hex(random_bytes(32));
+    $expiresAt = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+    // Store reset token
+    $stmt = $db->prepare(
+        "INSERT INTO password_resets (customer_id, token, expires_at, created_at)
+         VALUES (?, ?, ?, NOW())
+         ON DUPLICATE KEY UPDATE token = VALUES(token), expires_at = VALUES(expires_at)"
+    );
+
+    $stmt->execute([$customer['id'], $resetToken, $expiresAt]);
+
+    // Send reset email
+    try {
+        $emailService = new EmailService($db);
+        $resetUrl = (isset($_ENV['APP_URL']) ? $_ENV['APP_URL'] : 'https://glambymariga.com') . '/reset-password.php?token=' . $resetToken;
+
+        $emailService->send(
+            $data['email'],
+            'Reset Your Password',
+            'password_reset',
+            ['reset_url' => $resetUrl, 'expires_in' => '1 hour']
+        );
+    } catch (Exception $e) {
+        error_log('Password reset email failed: ' . $e->getMessage());
+    }
 
     MobileApiMiddleware::success([], 'If email exists, password reset link sent');
 }

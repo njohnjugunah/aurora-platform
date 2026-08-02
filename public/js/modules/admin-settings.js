@@ -22,7 +22,6 @@ const AdminSettingsModule = {
     },
 
     async init() {
-        console.log('Initializing Admin Settings Module');
         this.render();
         this.setupEventListeners();
         await this.loadInitialData();

@@ -18,7 +18,6 @@ const AdminDashboardModule = {
     },
 
     async init() {
-        console.log('Initializing Admin Dashboard Module');
         this.setDefaultDateRange();
         await this.loadDashboard();
         this.setupEventListeners();
@@ -296,7 +295,6 @@ const AdminDashboardModule = {
     },
 
     showSuccess(message) {
-        console.log('✓', message);
     },
 
     showError(message) {

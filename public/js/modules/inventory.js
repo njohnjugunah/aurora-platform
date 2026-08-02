@@ -18,7 +18,6 @@ const InventoryModule = {
     },
 
     async init() {
-        console.log('Initializing Inventory Module');
         await this.loadProducts();
         this.setupEventListeners();
     },
